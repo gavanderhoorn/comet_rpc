@@ -89,7 +89,8 @@ Example (installs `comet_rpc` `0.1.0`; be sure to update the URL to download the
 ```shell
 python3 -m venv $HOME/venv_comet_rpc
 source $HOME/venv_comet_rpc/bin/activate
-pip install -U pip wheel setuptools
+pip install -U pip
+pip install -U wheel setuptools
 pip install https://github.com/gavanderhoorn/comet_rpc/archive/0.1.0.tar.gz
 ```
 
