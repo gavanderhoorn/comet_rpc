@@ -1,6 +1,7 @@
 # comet_rpc
 
 [![license - apache 2.0](https://img.shields.io/:license-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI](https://github.com/gavanderhoorn/comet_rpc/workflows/CI/badge.svg?branch=master)](https://github.com/gavanderhoorn/comet_rpc/actions?query=workflow%3ACI)
 [![Github Issues](https://img.shields.io/github/issues/gavanderhoorn/comet_rpc.svg)](https://github.com/gavanderhoorn/comet_rpc/issues)
 
 ## Discussion
