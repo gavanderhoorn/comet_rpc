@@ -58,7 +58,7 @@ Interestingly, even though `COMET` is primarily used by iRProgrammer, option `J7
 
 The main other requirement is a functioning networking setup.
 Make sure you can ping the controller and the controller's website shows up when opening `http://robot_ip` in a browser.
-Configuration of *HTTP Authentication* is not needed, as `COMET` RPCs do not appear to be affected by it.
+Configuration of *HTTP Authentication* is not needed, as `COMET` RPCs do not appear to be affected by it (see [Security](#security) for some more discussion).
 
 ## Compatibility
 
