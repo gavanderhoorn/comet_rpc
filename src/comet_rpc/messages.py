@@ -44,6 +44,7 @@ class RpcId(str, Enum):
     GET_RAW_FILE = "251"
     GTFILIST = "234"
     IODEFPN = "68"
+    IOGETHDB = "218"
     IOGETPN = "67"
     IOGTALL = "226"
     IOVALRD = "62"
@@ -193,6 +194,22 @@ class ProgAbortResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.PGABORT]
 
 
+class IoGetHdbResponseElement(BaseModel):
+    rack: int
+    slot: int
+    devname: str
+    pd_port_type: t.List[int]
+
+    @validator("pd_port_type", pre=True)
+    def decode_pd_port_type(cls, v):
+        return list(map(int, v.split(","))) if isinstance(v, str) else v
+
+
+class IoGetHdbResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOGETHDB]
+    data: t.List[IoGetHdbResponseElement]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -201,6 +218,7 @@ AnnotatedResponseType = te.Annotated[
         DpReadResponse,
         GetRawFileResponse,
         GetFileListResponse,
+        IoGetHdbResponse,
         IoGetPnResponse,
         IoDefPnResponse,
         IoGetAllResponse,

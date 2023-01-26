@@ -47,6 +47,7 @@ from .messages import (
     GetRawFileResponse,
     IoDefPnResponse,
     IoGetAllResponse,
+    IoGetHdbResponse,
     IoGetPnResponse,
     LocalStartResponse,
     PosRegValReadResponse,
@@ -333,6 +334,27 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+
+    return ret
+
+
+def iogethdb(server: str) -> IoGetHdbResponse:
+    """Retrieve the IO HW DB (list of [rack, slot, type] tuples).
+
+    :param server: Hostname or IP address of COMET RPC server
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(
+        server,
+        function=RpcId.IOGETHDB,
+    )
+
+    ret = response.RPC[0]
+
+    # check call succeeded
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
 
