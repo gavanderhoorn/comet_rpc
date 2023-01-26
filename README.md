@@ -11,7 +11,7 @@ If something doesn't work, open an issue [on the tracker](https://github.com/gav
 
 ## Overview
 
-This is a low-level Python wrapper around the JSON-RPC interface offered by the `COMET` extension of FANUC's web server on R-30iB and R-30iB+ controllers (ie: V8.x and up).
+This is a low-level Python wrapper around the JSON-RPC interface offered by the `COMET` extension of FANUC's web server on R-30iB and R-30iB+ controllers (ie: V8 and up, although older than V9 has a (very) limited interface).
 `COMET` is used by iRProgrammer and a couple of other web-based UIs offered by FANUC on their more recent controller series.
 
 See [Requirements](#requirements) for some more information on required options.
