@@ -33,6 +33,7 @@ The author recommends using PCDK, RMI, OPC-UA and/or any of the supported fieldb
 1. [Compatibility](#compatibility)
 1. [Installation](#installation)
 1. [Example usage](#example-usage)
+1. [Supported RPCs](#supported-rpcs)
 1. [Limitations / Known issues](#limitations--known-issues)
 1. [Performance](#performance)
 1. [Related projects](#related-projects)
@@ -123,6 +124,105 @@ dout1_cmt = iogetpn(server, IoType.DigitalOut, index=1).value
 ```
 
 Note the lack of error detection and handling to keep the example brief.
+
+## Supported RPCs
+
+The following table shows an overview of known RPCs, whether they are currently supported by `comet_rpc` and which version of `COMET` appears to support them ("appears", as this information is based on experiments, there is no public, authoritative source of truth available).
+
+Whenever a row has no value in the `Sys. SW version` column, that information hasn't been determined yet.
+
+<details>
+<summary>Click to expand</summary>
+
+| Name              | Supported? | Sys. SW version |
+|:------------------|:----------:|----------------:|
+| CHGOVRD           |     N      | 9.40+           |
+| CKTRKPRG          |     N      | 9.40+           |
+| CLLB_CODE_REQ     |     N      | 9.40+           |
+| CLLB_PAYLOAD_CONF |     N      | 9.40+           |
+| CPKCL             |     Y      |                 |
+| DCS_CHECK_APPLY   |     N      | 9.40+           |
+| DCS_CHECK_CODE    |     N      | 9.40+           |
+| DCS_VRFY_REQ      |     N      | 9.40+           |
+| DPEWRITE_STR      |     Y      |                 |
+| DPREAD            |     Y      |                 |
+| ERPOST            |     N      |                 |
+| EXEC_TXCMND       |     N      |                 |
+| GET_FORM          |     N      |                 |
+| GET_RAW_FILE      |     Y      |                 |
+| GETFOCUS          |     N      |                 |
+| GTFILIST          |     Y      | 9.40+           |
+| GTMCRLST          |     N      |                 |
+| GTPIDLST          |     N      |                 |
+| IOASGLOG          |     N      | 9.40+           |
+| IOCKSIM           |     N      |                 |
+| IODEFPN           |     Y      |                 |
+| IODRYRUN          |     N      | 9.40+           |
+| IOGETASG          |     N      | 9.40+           |
+| IOGETHDB          |     N      | 9.40+           |
+| IOGETPN           |     Y      |                 |
+| IOGTALL           |     Y      |                 |
+| IOSIM             |     N      |                 |
+| IOUNSIM           |     N      |                 |
+| IOVALRD           |     Y      |                 |
+| IOVALSET          |     Y      |                 |
+| IOWETRUN          |     N      | 9.40+           |
+| LOCAL_PAUSE       |     N      |                 |
+| LOCAL_START       |     Y      |                 |
+| MG_RECPOS         |     N      | 9.40+           |
+| MMCHGTYP          |     N      |                 |
+| MMCREMN           |     N      |                 |
+| MMDELPOS          |     N      |                 |
+| MMDELPRG          |     N      |                 |
+| MMGETATR          |     N      |                 |
+| MMGETTYP          |     N      |                 |
+| MMRENPRG          |     N      |                 |
+| MMSETATR          |     N      |                 |
+| MNCHGREP          |     N      |                 |
+| MNCPYPRG          |     N      |                 |
+| OSSNDPKT_EXT      |     N      |                 |
+| PASTELIN          |     N      | 9.40+           |
+| PGABORT           |     Y      |                 |
+| PMCUPFN           |     N      |                 |
+| PMCUPRQ           |     N      |                 |
+| PMCVALRD          |     N      |                 |
+| PMON_CAN_PKT      |     N      |                 |
+| PMON_DISCONNECT   |     N      |                 |
+| PMON_GET_PKT      |     N      |                 |
+| PMON_START_MON    |     N      |                 |
+| PMON_STOP_MON     |     N      |                 |
+| PMON_VERIFY_PKT   |     N      |                 |
+| POSREGVALRD       |     Y      |                 |
+| RECPOS            |     N      |                 |
+| REGVALRD          |     Y      |                 |
+| RPRINTF           |     Y      |                 |
+| RUN_TASK          |     N      |                 |
+| SCDELETE          |     N      |                 |
+| SCEDIT            |     N      |                 |
+| SCGETPOS          |     N      | 9.40+           |
+| SCSETPOS          |     N      |                 |
+| SET_FORM          |     N      |                 |
+| SKIP_LINE         |     N      | 9.40+           |
+| TPEXTREQ          |     N      |                 |
+| TPLINK_DISCONNECT |     N      |                 |
+| TPLINK_NEW_URL    |     N      |                 |
+| TPMODE_CHG        |     N      | 9.40+           |
+| TPMULTI_TASKIDX   |     N      |                 |
+| TPXENSBV_KRL_EXT  |     N      |                 |
+| TPXENSBV_KRL_TEXT |     N      |                 |
+| TPXENSUB_EXT      |     N      |                 |
+| TPXFILSB_EXT      |     N      |                 |
+| TPXPRGSB_EXT      |     N      |                 |
+| TXCHGPRG          |     Y      |                 |
+| TXLSTPRG_FC       |     N      |                 |
+| TXML_CURANG       |     Y      |                 |
+| TXML_CURPOS       |     Y      |                 |
+| TXSETLIN          |     Y      |                 |
+| VMIP_READVA       |     Y      |                 |
+| VMIP_WRITEVA      |     Y      |                 |
+| XMLCOPY           |     N      |                 |
+
+</details>
 
 ## Limitations / Known issues
 
