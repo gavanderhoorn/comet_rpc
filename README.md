@@ -33,7 +33,7 @@ The author recommends using PCDK, RMI, OPC-UA and/or any of the supported fieldb
 1. [Compatibility](#compatibility)
 1. [Installation](#installation)
 1. [Example usage](#example-usage)
-1. [Limitations / Known issues](#limitations-known-issues)
+1. [Limitations / Known issues](#limitations--known-issues)
 1. [Performance](#performance)
 1. [Related projects](#related-projects)
 1. [Bugs, feature requests, etc](#bugs-feature-requests-etc)
