@@ -36,6 +36,7 @@ The author recommends using PCDK, RMI, OPC-UA and/or any of the supported fieldb
 1. [Supported RPCs](#supported-rpcs)
 1. [Limitations / Known issues](#limitations--known-issues)
 1. [Performance](#performance)
+1. [Security](#security)
 1. [Related projects](#related-projects)
 1. [Bugs, feature requests, etc](#bugs-feature-requests-etc)
 1. [FAQ](#faq)
@@ -254,6 +255,20 @@ See the following table for an indication of expected RPC performance:
 | R-30iB+  | V9.30P/??  | IOVALRD     |         ~18 |
 
 Note: this is without connection reuse, as it's unclear whether `COMET` supports this for regular RPC invocations.
+
+## Security
+
+`COMET` does not appear to be affected by the settings configured under `Host Comm`, section *HTTP Authentication*.
+
+No authentication challenges have been observed so far, although that does not mean they are not used.
+
+Some RPCs do appear to require a valid connection id argument, and starting up such a session will lock-out the physical teach pendant with a very clear message shown to operators (stating a "remote pendant" is in use).
+`comet_rpc` does not currently support any RPCs requiring a connection id, nor does it lock-out the physical pendant.
+
+Users concerned about potential undesired and uncontrolled access to the web server and `COMET` could look into configuring the host blocklist part of the *FANUC Server Access Control* feature.
+It's unclear at this point whether any fine-grained control is possible (ie: allow reads, deny all writes), but blocking unknown hosts from interacting with `COMET` would be a first step to making it harder to abuse the JSON-RPC interface.
+
+Refer to section 2.5 *FANUC SERVER ACCESS CONTROL (FSAC)* of the *FANUC Robot series - Ethernet Function - Operator's Manual* (document B-82974EN for the R-30iA, R-30iB and R-30iB+) for more information.
 
 ## Related projects
 
