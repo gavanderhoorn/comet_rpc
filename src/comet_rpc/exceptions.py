@@ -85,6 +85,11 @@ class ProgramDoesNotExistException(CometRpcException):
     pass
 
 
+# DICT-004: Dictionary not found
+class DictNotFoundException(CometRpcException):
+    pass
+
+
 # DICT-005: Dictionary element not found
 class DictElementNotFoundException(CometRpcException):
     pass

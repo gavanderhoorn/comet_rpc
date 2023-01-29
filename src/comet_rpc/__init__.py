@@ -16,6 +16,7 @@
 
 from .comet import (
     dpewrite_str,
+    dpread,
     exec_kcl,
     get_raw_file,
     gtfilist,
@@ -45,6 +46,7 @@ from .exceptions import (
     CometRpcException,
     DeserialisationException,
     DictElementNotFoundException,
+    DictNotFoundException,
     InvalidIoIndexException,
     InvalidIoTypeException,
     LockedResourceException,
@@ -69,7 +71,9 @@ __all__ = [
     "CometRpcException",
     "DeserialisationException",
     "DictElementNotFoundException",
+    "DictNotFoundException",
     "dpewrite_str",
+    "dpread",
     "exec_kcl",
     "get_raw_file",
     "gtfilist",

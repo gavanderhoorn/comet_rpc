@@ -18,6 +18,7 @@ from enum import IntEnum
 
 
 class ErrorDictionary(IntEnum):
+    DICT_004 = 0x210004
     DICT_005 = 0x210005
 
     MEMO_073 = 0x070049

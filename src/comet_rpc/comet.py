@@ -26,6 +26,7 @@ from .exceptions import (
     BadVariableOrRegisterIndexException,
     DeserialisationException,
     DictElementNotFoundException,
+    DictNotFoundException,
     InvalidIoIndexException,
     InvalidIoTypeException,
     LockedResourceException,
@@ -42,6 +43,7 @@ from .fr_errors import ErrorDictionary
 from .kliotyps import IoType
 from .messages import (
     DpeWriteStrResponse,
+    DpReadResponse,
     ExecKclCommandResponse,
     GetFileListResponse,
     GetRawFileResponse,
@@ -217,6 +219,31 @@ def _call(
     # leave checking RPC status codes to caller. They'll have more context.
 
     return response
+
+
+def dpread(server: str, dict_name: str, ele_no: int) -> DpReadResponse:
+    """Return the text associated with element `ele_no` from dictionary `dict_name`.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param dict_name: Name of the dictionary
+    :param ele_no: Index of element in the dictionary
+    :returns: The parsed response document
+    :raises DictNotFoundException: If the dictionary could not be found
+    :raises DictElementNotFoundException: If `ele_no` could not be found in `dict_name`
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.DPREAD, dict_name=dict_name, ele_no=ele_no)
+
+    ret = response.RPC[0]
+
+    if ret.status == ErrorDictionary.DICT_004:
+        raise DictNotFoundException(f"No such dictionary: '{dict_name}'")
+    if ret.status == ErrorDictionary.DICT_005:
+        raise DictElementNotFoundException(f"No such element: {ele_no}")
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+
+    return ret
 
 
 def dpewrite_str(server: str, error_code: int) -> DpeWriteStrResponse:
