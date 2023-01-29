@@ -37,6 +37,7 @@ class RpcId(str, Enum):
     # are checked before validators are run (so the conversion to int in
     # BaseRpcResponse only happens after the discriminator field has been
     # checked)
+    CHGOVRD = "220"
     CPKCL = "87"
     DPEWRITE_STR = "83"
     DPREAD = "148"
@@ -214,9 +215,14 @@ class IoGetHdbResponse(BaseRpcResponse):
     data: t.List[IoGetHdbResponseElement]
 
 
+class ChangeOverrideResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.CHGOVRD]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
+        ChangeOverrideResponse,
         ExecKclCommandResponse,
         DpeWriteStrResponse,
         DpReadResponse,

@@ -15,6 +15,7 @@
 # author: G.A. vd. Hoorn
 
 from .comet import (
+    change_override,
     dpewrite_str,
     dpread,
     exec_kcl,
@@ -68,6 +69,7 @@ __all__ = [
     "AuthenticationException",
     "BadElementInStructureException",
     "BadVariableOrRegisterIndexException",
+    "change_override",
     "CometRpcException",
     "DeserialisationException",
     "DictElementNotFoundException",

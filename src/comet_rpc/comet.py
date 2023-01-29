@@ -42,6 +42,7 @@ from .exceptions import (
 from .fr_errors import ErrorDictionary
 from .kliotyps import IoType
 from .messages import (
+    ChangeOverrideResponse,
     DpeWriteStrResponse,
     DpReadResponse,
     ExecKclCommandResponse,
@@ -219,6 +220,34 @@ def _call(
     # leave checking RPC status codes to caller. They'll have more context.
 
     return response
+
+
+def change_override(server: str, value: int) -> ChangeOverrideResponse:
+    """Set the general override to `value`.
+
+    (Apparent) legal values and ranges:
+
+     - `-1`: VFINE
+     -  `0`: FINE
+     - `[1, 100]`
+
+    NOTE: this RPC does not seem to work unless the TP has been active at least once.
+    In Roboguide for instance the general override cannot be changed unless the TP has
+    appeared on screen / logged in at least once.
+
+    NOTE 2: COMET does not appear to report any failures whatsoever. Values which fall
+    outside the accepted range will NOT result in an RPC status != 0.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param value: The value to set the general override to
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.CHGOVRD, ovrd_val=int(value))
+    ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
 
 
 def dpread(server: str, dict_name: str, ele_no: int) -> DpReadResponse:

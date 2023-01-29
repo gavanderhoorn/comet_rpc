@@ -137,7 +137,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 
 | Name              | Supported? | Sys. SW version |
 |:------------------|:----------:|----------------:|
-| CHGOVRD           |     N      | 9.40+           |
+| CHGOVRD           |     Y      | 9.40+           |
 | CKTRKPRG          |     N      | 9.40+           |
 | CLLB_CODE_REQ     |     N      | 9.40+           |
 | CLLB_PAYLOAD_CONF |     N      | 9.40+           |
