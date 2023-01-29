@@ -177,7 +177,11 @@ class GetRawFileResponse(BaseRpcResponse):
 
 class GetFileListResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.GTFILIST]
-    value: str
+    value: t.List[str]
+
+    @validator("value", pre=True)
+    def decode_value(cls, v):
+        return v.split(",") if isinstance(v, str) else v
 
 
 class TxMlCurPosResponse(BaseRpcResponse):
