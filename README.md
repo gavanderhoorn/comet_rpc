@@ -146,27 +146,27 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | DCS_CHECK_CODE    |     N      | 9.40+           |
 | DCS_VRFY_REQ      |     N      | 9.40+           |
 | DPEWRITE_STR      |     Y      |                 |
-| DPREAD            |     Y      |                 |
+| DPREAD            |     Y      | 8.30+           |
 | ERPOST            |     N      |                 |
-| EXEC_TXCMND       |     N      |                 |
-| GET_FORM          |     N      |                 |
+| EXEC_TXCMND       |     N      | 8.10+           |
+| GET_FORM          |     N      | 8.10+           |
 | GET_RAW_FILE      |     Y      |                 |
 | GETFOCUS          |     N      |                 |
 | GTFILIST          |     Y      | 9.40+           |
 | GTMCRLST          |     N      |                 |
 | GTPIDLST          |     N      |                 |
 | IOASGLOG          |     N      | 9.40+           |
-| IOCKSIM           |     N      |                 |
+| IOCKSIM           |     N      | 8.30+           |
 | IODEFPN           |     Y      |                 |
 | IODRYRUN          |     N      | 9.40+           |
 | IOGETASG          |     N      | 9.40+           |
 | IOGETHDB          |     Y      | 9.40+           |
 | IOGETPN           |     Y      |                 |
 | IOGTALL           |     Y      |                 |
-| IOSIM             |     N      |                 |
-| IOUNSIM           |     N      |                 |
-| IOVALRD           |     Y      |                 |
-| IOVALSET          |     Y      |                 |
+| IOSIM             |     N      | 8.30+           |
+| IOUNSIM           |     N      | 8.30+           |
+| IOVALRD           |     Y      | 8.30+           |
+| IOVALSET          |     Y      | 8.30+           |
 | IOWETRUN          |     N      | 9.40+           |
 | LOCAL_PAUSE       |     N      |                 |
 | LOCAL_START       |     Y      |                 |
@@ -187,28 +187,28 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | PMCUPFN           |     N      |                 |
 | PMCUPRQ           |     N      |                 |
 | PMCVALRD          |     N      |                 |
-| PMON_CAN_PKT      |     N      |                 |
-| PMON_DISCONNECT   |     N      |                 |
-| PMON_GET_PKT      |     N      |                 |
-| PMON_START_MON    |     N      |                 |
-| PMON_STOP_MON     |     N      |                 |
-| PMON_VERIFY_PKT   |     N      |                 |
+| PMON_CAN_PKT      |     N      | 8.10+           |
+| PMON_DISCONNECT   |     N      | 8.10+           |
+| PMON_GET_PKT      |     N      | 8.10+           |
+| PMON_START_MON    |     N      | 8.10+           |
+| PMON_STOP_MON     |     N      | 8.10+           |
+| PMON_VERIFY_PKT   |     N      | 8.30+           |
 | POSREGVALRD       |     Y      |                 |
 | RECPOS            |     N      |                 |
 | REGVALRD          |     Y      |                 |
-| RPRINTF           |     Y      |                 |
+| RPRINTF           |     Y      | 8.10+           |
 | RUN_TASK          |     N      |                 |
 | SCDELETE          |     N      |                 |
 | SCEDIT            |     N      |                 |
 | SCGETPOS          |     N      | 9.40+           |
 | SCSETPOS          |     N      |                 |
-| SET_FORM          |     N      |                 |
+| SET_FORM          |     N      | 8.10+           |
 | SKIP_LINE         |     N      | 9.40+           |
-| TPEXTREQ          |     N      |                 |
+| TPEXTREQ          |     N      | 8.10+           |
 | TPLINK_DISCONNECT |     N      |                 |
-| TPLINK_NEW_URL    |     N      |                 |
+| TPLINK_NEW_URL    |     N      | 8.10+           |
 | TPMODE_CHG        |     N      | 9.40+           |
-| TPMULTI_TASKIDX   |     N      |                 |
+| TPMULTI_TASKIDX   |     N      | 8.30+           |
 | TPXENSBV_KRL_EXT  |     N      |                 |
 | TPXENSBV_KRL_TEXT |     N      |                 |
 | TPXENSUB_EXT      |     N      |                 |
@@ -220,7 +220,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | TXML_CURPOS       |     Y      |                 |
 | TXSETLIN          |     Y      |                 |
 | VMIP_READVA       |     Y      |                 |
-| VMIP_WRITEVA      |     Y      |                 |
+| VMIP_WRITEVA      |     Y      | 8.30+           |
 | XMLCOPY           |     N      |                 |
 
 </details>
