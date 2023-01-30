@@ -47,6 +47,7 @@ from .messages import (
     DpReadResponse,
     ExecKclCommandResponse,
     GetFileListResponse,
+    GetMacroListResponse,
     GetRawFileResponse,
     IoDefPnResponse,
     IoGetAllResponse,
@@ -356,6 +357,23 @@ def gtfilist(server: str, path_name: str) -> GetFileListResponse:
     """
     response = _call(server, function=RpcId.GTFILIST, path_name=path_name)
 
+    ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+def get_macro_list(server: str) -> GetMacroListResponse:
+    """Retrieve the names of all macros present on the controller.
+
+    NOTE: COMET appears to return an empty string as the last element in the list.
+    `comet_rpc` does not remove it.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.GTMCRLST)
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)

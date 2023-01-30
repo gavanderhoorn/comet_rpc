@@ -44,6 +44,7 @@ class RpcId(str, Enum):
     ERPOST = "85"
     GET_RAW_FILE = "251"
     GTFILIST = "234"
+    GTMCRLST = "244"
     IODEFPN = "68"
     IOGETHDB = "218"
     IOGETPN = "67"
@@ -219,6 +220,11 @@ class ChangeOverrideResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.CHGOVRD]
 
 
+class GetMacroListResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.GTMCRLST]
+    macrolist: t.List[str]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -228,6 +234,7 @@ AnnotatedResponseType = te.Annotated[
         DpReadResponse,
         GetRawFileResponse,
         GetFileListResponse,
+        GetMacroListResponse,
         IoGetHdbResponse,
         IoGetPnResponse,
         IoDefPnResponse,

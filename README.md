@@ -153,7 +153,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | GET_RAW_FILE      |     Y      |                 |
 | GETFOCUS          |     N      |                 |
 | GTFILIST          |     Y      | 9.40+           |
-| GTMCRLST          |     N      |                 |
+| GTMCRLST          |     Y      | 9.30+           |
 | GTPIDLST          |     N      |                 |
 | IOASGLOG          |     N      | 9.40+           |
 | IOCKSIM           |     N      | 8.30+           |
