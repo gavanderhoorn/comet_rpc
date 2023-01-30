@@ -53,6 +53,7 @@ from .messages import (
     IoCheckSimResponse,
     IoDefPnResponse,
     IoGetAllResponse,
+    IoGetAsgResponse,
     IoGetHdbResponse,
     IoGetPnResponse,
     LocalStartResponse,
@@ -450,6 +451,21 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
 
+    return ret
+
+
+def iogetasg(server: str, typ: IoType) -> IoGetAsgResponse:
+    """Retrieve the IO configuratio for ports of type `typ`.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param typ: The type of IO port
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.IOGETASG, type=typ.value)
+    ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
     return ret
 
 

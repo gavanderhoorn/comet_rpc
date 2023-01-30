@@ -16,7 +16,7 @@
 
 from base64 import urlsafe_b64decode
 
-from enum import Enum
+from enum import Enum, IntEnum
 
 import typing as t
 import typing_extensions as te
@@ -47,6 +47,7 @@ class RpcId(str, Enum):
     GTMCRLST = "244"
     IOCKSIM = "64"
     IODEFPN = "68"
+    IOGETASG = "219"
     IOGETHDB = "218"
     IOGETPN = "67"
     IOGTALL = "226"
@@ -234,6 +235,28 @@ class IoCheckSimResponse(BaseRpcResponse):
     value: bool
 
 
+class IoAsgStatus(IntEnum):
+    INVALID = 1
+    ACTIVE = 2
+    PENDING = 3
+
+
+class IoGetAsgResponseElement(BaseModel):
+    log_port_type: IoType
+    fst_log_port: int
+    n_log_ports: int
+    rack_no: int
+    slot_no: int
+    phy_port_type: IoType
+    fst_phy_port: int
+    valid: IoAsgStatus
+
+
+class IoGetAsgResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOGETASG]
+    data: t.List[IoGetAsgResponseElement]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -247,6 +270,7 @@ AnnotatedResponseType = te.Annotated[
         IoCheckSimResponse,
         IoDefPnResponse,
         IoGetAllResponse,
+        IoGetAsgResponse,
         IoGetHdbResponse,
         IoGetPnResponse,
         LocalStartResponse,

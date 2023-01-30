@@ -159,7 +159,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | IOCKSIM           |     Y      | 8.30+           |
 | IODEFPN           |     Y      |                 |
 | IODRYRUN          |     N      | 9.40+           |
-| IOGETASG          |     N      | 9.40+           |
+| IOGETASG          |     Y      | 9.40+           |
 | IOGETHDB          |     Y      | 9.40+           |
 | IOGETPN           |     Y      |                 |
 | IOGTALL           |     Y      |                 |
