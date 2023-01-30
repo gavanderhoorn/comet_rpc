@@ -64,6 +64,7 @@ class RpcId(str, Enum):
     RECPOS = "236"
     REGVALRD = "247"
     RPRINTF = "89"
+    SCGETPOS = "14"
     TXCHGPRG = "43"
     TXML_CURANG = "91"
     TXML_CURPOS = "90"
@@ -278,6 +279,12 @@ class GetPIdListResponse(BaseRpcResponse):
     posidlist: t.List[int]
 
 
+class ScGetPosResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.SCGETPOS]
+    comment: str
+    value: t.List[str]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -303,6 +310,7 @@ AnnotatedResponseType = te.Annotated[
         ReadIoResponse,
         RegisterReadResponse,
         RemotePrintfResponse,
+        ScGetPosResponse,
         TxChgPrgResponse,
         TxMlCurAngResponse,
         TxMlCurPosResponse,

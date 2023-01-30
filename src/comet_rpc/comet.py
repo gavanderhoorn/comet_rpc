@@ -34,6 +34,7 @@ from .exceptions import (
     NoDataDefinedForProgramException,
     NoPortsOfThisTypeException,
     NoSuchMethodException,
+    PositionDoesNotExistException,
     ProgramDoesNotExistException,
     UnexpectedResponseContentException,
     UnexpectedResultCodeException,
@@ -67,6 +68,7 @@ from .messages import (
     RemotePrintfResponse,
     RpcId,
     RpcResponse,
+    ScGetPosResponse,
     TxChgPrgResponse,
     TxMlCurAngResponse,
     TxMlCurPosResponse,
@@ -798,6 +800,34 @@ def rprintf(server: str, line: str) -> RemotePrintfResponse:
     query_str = f"={parse.quote(line)}"
     response = _call(server, function=RpcId.RPRINTF, query_str=query_str)
     ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+def scgetpos(server: str, prog_name: str, index: int) -> ScGetPosResponse:
+    """Return the (str repr) of the position at `index` in `prog_name`.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param prog_name: Name of the program to open
+    :param index: Index of the position
+    :returns: The parsed response document
+    :raises ProgramDoesNotExistException: If the program `prog_name` does not actually
+      exist on the controller
+    :raises PositionDoesNotExistException: If `prog_name` does not have a defined
+      position at `index`
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(
+        server, function=RpcId.SCGETPOS, prog_name=prog_name.upper(), pos_idx=index
+    )
+    ret = response.RPC[0]
+    if ret.status == ErrorDictionary.MEMO_071:
+        raise PositionDoesNotExistException(
+            f"No position defined at index {index} in '{prog_name.upper()}'"
+        )
+    if ret.status == ErrorDictionary.MEMO_073:
+        raise ProgramDoesNotExistException(prog_name.upper())
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
     return ret

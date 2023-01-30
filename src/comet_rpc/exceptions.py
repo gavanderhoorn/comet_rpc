@@ -85,6 +85,11 @@ class BadElementInStructureException(CometRpcException):
     pass
 
 
+# MEMO-071
+class PositionDoesNotExistException(CometRpcException):
+    pass
+
+
 # MEMO-073: The specified program does not exist in the system
 class ProgramDoesNotExistException(CometRpcException):
     pass
