@@ -25,6 +25,7 @@ class ErrorDictionary(IntEnum):
 
     PRIO_001 = 0x0D0001
     PRIO_002 = 0x0D0002
+    PRIO_023 = 0x0D0017
     PRIO_030 = 0x0D001E
 
     VARS_006 = 0x100006

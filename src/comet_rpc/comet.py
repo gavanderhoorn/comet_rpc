@@ -32,6 +32,7 @@ from .exceptions import (
     LockedResourceException,
     NoCommentOnIoPortException,
     NoDataDefinedForProgramException,
+    NoPortsOfThisTypeException,
     NoSuchMethodException,
     ProgramDoesNotExistException,
     UnexpectedResponseContentException,
@@ -49,6 +50,7 @@ from .messages import (
     GetFileListResponse,
     GetMacroListResponse,
     GetRawFileResponse,
+    IoCheckSimResponse,
     IoDefPnResponse,
     IoGetAllResponse,
     IoGetHdbResponse,
@@ -198,6 +200,13 @@ def _call(
             raise UnexpectedResponseContentException(
                 f"Malformed response: '{response_text}'"
             )
+
+    # COMET (at least version V9.40) appears to return an IOVALRD response document
+    # for IOCKSIM requests. Patch the response text here before it gets parsed
+    if function == RpcId.IOCKSIM:
+        response_text = response_text.replace(
+            f'"rpc":"{RpcId.IOVALRD.value}"', f'"rpc":"{RpcId.IOCKSIM.value}"'
+        )
 
     # try to parse as JSON. If we've patched the response document earlier
     # this should now succeed for those cases where we initially received a
@@ -377,6 +386,36 @@ def get_macro_list(server: str) -> GetMacroListResponse:
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+def iocksim(server: str, typ: IoType, index: int) -> IoCheckSimResponse:
+    """Check whether the IO port at `index` of type `typ` is simulated or not.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param typ: The type of IO port
+    :param index: The specific port to check
+    :returns: The parsed response document
+    :raises InvalidIoIndexException: If the `index` is not a valid value for the
+      `type` specified
+    :raises InvalidIoTypeException: If `type` is not a recognised IO type
+    :raises NoPortsOfThisTypeException: If there is no port with number `index` of
+      type `typ` configured on the controller
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.IOCKSIM, type=typ.value, index=index)
+    ret = response.RPC[0]
+
+    # check call succeeded
+    if ret.status == ErrorDictionary.PRIO_001:
+        raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
+    if ret.status == ErrorDictionary.PRIO_002:
+        raise InvalidIoIndexException(f"Illegal port number for port: {index}")
+    if ret.status == ErrorDictionary.PRIO_023:
+        raise NoPortsOfThisTypeException(f"Port number: {index}")
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+
     return ret
 
 

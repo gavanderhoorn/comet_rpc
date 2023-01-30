@@ -45,6 +45,7 @@ class RpcId(str, Enum):
     GET_RAW_FILE = "251"
     GTFILIST = "234"
     GTMCRLST = "244"
+    IOCKSIM = "64"
     IODEFPN = "68"
     IOGETHDB = "218"
     IOGETPN = "67"
@@ -225,6 +226,14 @@ class GetMacroListResponse(BaseRpcResponse):
     macrolist: t.List[str]
 
 
+class IoCheckSimResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOCKSIM]
+    type: IoType
+    index: int
+    # officially an 'int', but bool makes more sense
+    value: bool
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -235,6 +244,7 @@ AnnotatedResponseType = te.Annotated[
         GetRawFileResponse,
         GetFileListResponse,
         GetMacroListResponse,
+        IoCheckSimResponse,
         IoGetHdbResponse,
         IoGetPnResponse,
         IoDefPnResponse,

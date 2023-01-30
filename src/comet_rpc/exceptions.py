@@ -56,6 +56,11 @@ class InvalidIoIndexException(CometRpcException):
     pass
 
 
+# PRIO-023
+class NoPortsOfThisTypeException(CometRpcException):
+    pass
+
+
 class NoSuchMethodException(CometRpcException):
     pass
 
