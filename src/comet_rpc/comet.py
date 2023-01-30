@@ -183,19 +183,22 @@ def _call(
     #   {"FANUC":{"name":"<HOSTNAME>","fastclock":"<SOME_VALUE>","RPC":]}}
     #
     # This has been reported on a real R-30iB+ running V9.3074 of the system
-    # software. iRProgrammer seems to ignore this, so we will as well.
+    # software (for IOVALSET). iRProgrammer seems to ignore this, so we will as well.
     #
-    # For now we add special handling for the IOVALSET case here. Not sure I
-    # like this very much.
+    # For now we add special handling for the IOVALSET and IOUNSIM cases here. Not
+    # sure I like this very much.
     #
     # TODO: come up with a better way to deal with malformed responses
     response_text = r.text
     if '"RPC":]}}' in response_text:
-        if function == RpcId.IOVALSET:
+        if function in [RpcId.IOVALSET, RpcId.IOUNSIM]:
             # we can only assume the call succeeded, so fixup the response
+            # TODO: it's likely IOUNSIM responses would be similar to IOSIM responses,
+            # which would mean they'd be like IOVALRD. The patching we do here turns
+            # it into a basic RpcReponse, which has fewer fields and less information.
             response_text = response_text.replace(
                 '"RPC":]}}',
-                f'"RPC":[{{"rpc":"{RpcId.IOVALSET.value}","status":"0x0"}}]}}}}',
+                f'"RPC":[{{"rpc":"{function.value}","status":"0x0"}}]}}}}',
             )
 
         # no special handling, just inform caller
@@ -205,10 +208,11 @@ def _call(
             )
 
     # COMET (at least version V9.40) appears to return an IOVALRD response document
-    # for IOCKSIM requests. Patch the response text here before it gets parsed
-    if function == RpcId.IOCKSIM:
+    # for IOCKSIM and IOSIM requests. Patch the response text here before it gets
+    # parsed below
+    if function in [RpcId.IOCKSIM, RpcId.IOSIM]:
         response_text = response_text.replace(
-            f'"rpc":"{RpcId.IOVALRD.value}"', f'"rpc":"{RpcId.IOCKSIM.value}"'
+            f'"rpc":"{RpcId.IOVALRD.value}"', f'"rpc":"{function.value}"'
         )
 
     # try to parse as JSON. If we've patched the response document earlier
@@ -589,6 +593,12 @@ def iosim(server: str, typ: IoType, index: int) -> IoSimResponse:
 
 def iounsim(server: str, typ: IoType, index: int) -> IoUnsimResponse:
     """Set the IO port of type `typ` at `index` to 'unsimulated'.
+
+    NOTE: certain system software versions appear to return a malformed response
+    for this RPC. _call(..) handles this for us by patching up the returned JSON.
+    Just as iRProgrammer, we pretend everything is fine (as we have no way of knowing
+    whether it isn't). This will make detecting errors more difficult/impossible, but
+    there doesn't appear to be a way around this.
 
     :param server: Hostname or IP address of COMET RPC server
     :param typ: The type of IO port
