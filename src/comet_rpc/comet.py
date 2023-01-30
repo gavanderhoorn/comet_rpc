@@ -14,6 +14,7 @@
 
 # author: G.A. vd. Hoorn
 
+from enum import IntEnum
 from json import loads as json_loads
 import requests
 import typing as t
@@ -27,12 +28,14 @@ from .exceptions import (
     DeserialisationException,
     DictElementNotFoundException,
     DictNotFoundException,
+    InvalidArgumentException,
     InvalidIoIndexException,
     InvalidIoTypeException,
     LockedResourceException,
     NoCommentOnIoPortException,
     NoDataDefinedForProgramException,
     NoPortsOfThisTypeException,
+    NoSuchLineException,
     NoSuchMethodException,
     PositionDoesNotExistException,
     ProgramDoesNotExistException,
@@ -61,6 +64,7 @@ from .messages import (
     IoSimResponse,
     IoUnsimResponse,
     LocalStartResponse,
+    PasteLineResponse,
     PosRegValReadResponse,
     ProgAbortResponse,
     ReadIoResponse,
@@ -721,6 +725,56 @@ def local_start(server: str, value: int) -> LocalStartResponse:
     response = _call(server, function=RpcId.LOCAL_START, value=value)
 
     ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+class PasteLineOper(IntEnum):
+    COPY = 0
+    CUT = 1
+
+
+def paste_line(
+    server: str,
+    prog_name: str,
+    select_start: int,
+    select_end: int,
+    insert_at: int,
+    oper: PasteLineOper,
+) -> PasteLineResponse:
+    """Copy or cut lines `[start, end]` in TP program `prog_name` to line `insert_at`.
+
+    NOTE: COMET will insert the copied/cut line(s) *after* the line at `insert_at`. In
+    effect, this makes `insert_at` 0-based, whereas `select_start` and `select_end`
+    are 1-based.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param prog_name: Name of the program to alter
+    :param select_start: Start of region to select for copy/cut operation (1-based)
+    :param select_end: End of region to select for copy/cut operation (1-based)
+    :param insert_at: Line number to paste to (0-based)
+    :param oper: The operation to perform: copy (duplicate) or cut (move)
+    :returns: The parsed response document
+    :raise InvalidArgumentException: If `select_end < select_start` or if `oper` is
+      an invalid value
+    :raise NoSuchLineException: If `insert_at` is not a valid line nr in `prog_name`
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(
+        server,
+        function=RpcId.PASTELIN,
+        prog_name=prog_name.upper(),
+        start=select_start,
+        end=select_end,
+        insert=insert_at,
+        opt_sw=oper.value,
+    )
+    ret = response.RPC[0]
+    if ret.status == ErrorDictionary.MEMO_027:
+        raise NoSuchLineException(f"insert_at: {insert_at}")
+    if ret.status == ErrorDictionary.HRTL_022:
+        raise InvalidArgumentException()
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
     return ret

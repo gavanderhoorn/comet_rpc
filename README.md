@@ -182,7 +182,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | MNCHGREP          |     N      |                 |
 | MNCPYPRG          |     N      |                 |
 | OSSNDPKT_EXT      |     N      |                 |
-| PASTELIN          |     N      | 9.40+           |
+| PASTELIN          |     Y      | 9.40+           |
 | PGABORT           |     Y      |                 |
 | PMCUPFN           |     N      |                 |
 | PMCUPRQ           |     N      |                 |

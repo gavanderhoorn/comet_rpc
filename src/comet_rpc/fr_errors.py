@@ -21,6 +21,9 @@ class ErrorDictionary(IntEnum):
     DICT_004 = 0x210004
     DICT_005 = 0x210005
 
+    HRTL_022 = 0x420016
+
+    MEMO_027 = 0x07001B
     MEMO_071 = 0x070047
     MEMO_073 = 0x070049
 

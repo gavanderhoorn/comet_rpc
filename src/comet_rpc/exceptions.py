@@ -85,6 +85,11 @@ class BadElementInStructureException(CometRpcException):
     pass
 
 
+# MEMO-027
+class NoSuchLineException(CometRpcException):
+    pass
+
+
 # MEMO-071
 class PositionDoesNotExistException(CometRpcException):
     pass
@@ -107,4 +112,9 @@ class DictElementNotFoundException(CometRpcException):
 
 # PRIO-030: <doesn't appear to have a documented cause>
 class NoCommentOnIoPortException(CometRpcException):
+    pass
+
+
+# HRTL-022: Invalid Argument
+class InvalidArgumentException(CometRpcException):
     pass

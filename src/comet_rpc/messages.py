@@ -59,6 +59,7 @@ class RpcId(str, Enum):
     LOCAL_START = "245"
     MMCREMN = "22"
     MMMSOPEN = "9"
+    PASTELIN = "225"
     PGABORT = "102"
     POSREGVALRD = "248"
     RECPOS = "236"
@@ -285,6 +286,11 @@ class ScGetPosResponse(BaseRpcResponse):
     value: t.List[str]
 
 
+class PasteLineResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.PASTELIN]
+    lin_num: int
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -305,6 +311,7 @@ AnnotatedResponseType = te.Annotated[
         IoSimResponse,
         IoUnsimResponse,
         LocalStartResponse,
+        PasteLineResponse,
         PosRegValReadResponse,
         ProgAbortResponse,
         ReadIoResponse,
