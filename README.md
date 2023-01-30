@@ -163,8 +163,8 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | IOGETHDB          |     Y      | 9.40+           |
 | IOGETPN           |     Y      |                 |
 | IOGTALL           |     Y      |                 |
-| IOSIM             |     N      | 8.30+           |
-| IOUNSIM           |     N      | 8.30+           |
+| IOSIM             |     Y      | 8.30+           |
+| IOUNSIM           |     Y      | 8.30+           |
 | IOVALRD           |     Y      | 8.30+           |
 | IOVALSET          |     Y      | 8.30+           |
 | IOWETRUN          |     N      | 9.40+           |

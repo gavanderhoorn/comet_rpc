@@ -56,6 +56,8 @@ from .messages import (
     IoGetAsgResponse,
     IoGetHdbResponse,
     IoGetPnResponse,
+    IoSimResponse,
+    IoUnsimResponse,
     LocalStartResponse,
     PosRegValReadResponse,
     ProgAbortResponse,
@@ -547,6 +549,62 @@ def iogtall(server: str, typ: IoType, index: int, count: int) -> IoGetAllRespons
 
     ret = response.RPC[0]
 
+    if ret.status == ErrorDictionary.PRIO_001:
+        raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
+    if ret.status == ErrorDictionary.PRIO_002:
+        raise InvalidIoIndexException(f"Illegal port number for port: {index}")
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+
+    return ret
+
+
+def iosim(server: str, typ: IoType, index: int) -> IoSimResponse:
+    """Set the IO port of type `typ` at `index` to 'simulated'.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param typ: The type of IO port
+    :param index: The specific port to set to simulated (1-based)
+    :returns: The parsed response document
+    :raises InvalidIoIndexException: If the `index` is not a valid value for the
+      `type` specified
+    :raises InvalidIoTypeException: If `type` is not a recognised IO type
+    :raises NoCommentOnIoPortException: If the port has no comment configured
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.IOSIM, type=typ.value, index=index)
+
+    ret = response.RPC[0]
+
+    # check call succeeded
+    if ret.status == ErrorDictionary.PRIO_001:
+        raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
+    if ret.status == ErrorDictionary.PRIO_002:
+        raise InvalidIoIndexException(f"Illegal port number for port: {index}")
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+
+    return ret
+
+
+def iounsim(server: str, typ: IoType, index: int) -> IoUnsimResponse:
+    """Set the IO port of type `typ` at `index` to 'unsimulated'.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param typ: The type of IO port
+    :param index: The specific port to set to unsimulated (1-based)
+    :returns: The parsed response document
+    :raises InvalidIoIndexException: If the `index` is not a valid value for the
+      `type` specified
+    :raises InvalidIoTypeException: If `type` is not a recognised IO type
+    :raises NoCommentOnIoPortException: If the port has no comment configured
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.IOUNSIM, type=typ.value, index=index)
+
+    ret = response.RPC[0]
+
+    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:

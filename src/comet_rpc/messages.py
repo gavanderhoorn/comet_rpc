@@ -51,6 +51,8 @@ class RpcId(str, Enum):
     IOGETHDB = "218"
     IOGETPN = "67"
     IOGTALL = "226"
+    IOSIM = "65"
+    IOUNSIM = "66"
     IOVALRD = "62"
     IOVALSET = "63"
     LOCAL_START = "245"
@@ -257,6 +259,18 @@ class IoGetAsgResponse(BaseRpcResponse):
     data: t.List[IoGetAsgResponseElement]
 
 
+class IoSimResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOSIM]
+    type: IoType
+    index: int
+    # officially an 'int', but bool makes more sense
+    value: bool
+
+
+class IoUnsimResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOUNSIM]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -273,6 +287,8 @@ AnnotatedResponseType = te.Annotated[
         IoGetAsgResponse,
         IoGetHdbResponse,
         IoGetPnResponse,
+        IoSimResponse,
+        IoUnsimResponse,
         LocalStartResponse,
         PosRegValReadResponse,
         ProgAbortResponse,
