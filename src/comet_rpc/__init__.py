@@ -75,7 +75,7 @@ from .exceptions import (
 
 from .kliotyps import IoType
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 __all__ = [
     "AuthenticationException",

@@ -86,14 +86,14 @@ The author has primarily used Python 3.8, but other versions are expected to wor
 
 Future versions may be released to PyPi.
 
-Example (installs `comet_rpc` `0.2.1`; be sure to update the URL to download the desired version):
+Example (installs `comet_rpc` `0.2.2`; be sure to update the URL to download the desired version):
 
 ```shell
 python3 -m venv $HOME/venv_comet_rpc
 source $HOME/venv_comet_rpc/bin/activate
 pip install -U pip
 pip install -U wheel setuptools
-pip install https://github.com/gavanderhoorn/comet_rpc/archive/0.2.1.tar.gz
+pip install https://github.com/gavanderhoorn/comet_rpc/archive/0.2.2.tar.gz
 ```
 
 ## Example usage
