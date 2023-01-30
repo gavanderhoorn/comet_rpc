@@ -49,6 +49,7 @@ from .messages import (
     ExecKclCommandResponse,
     GetFileListResponse,
     GetMacroListResponse,
+    GetPIdListResponse,
     GetRawFileResponse,
     IoCheckSimResponse,
     IoDefPnResponse,
@@ -391,6 +392,24 @@ def get_macro_list(server: str) -> GetMacroListResponse:
     """
     response = _call(server, function=RpcId.GTMCRLST)
     ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+def get_pos_id_list(server: str, prog_name: str) -> GetPIdListResponse:
+    """Retrieve a list of defined positions in program `prog_name`.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param prog_name: Name of the program to retrieve the position ID list for
+    :returns: The parsed response document
+    :raises ProgramDoesNotExistException: If `prog_name` does not exist
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.GTPIDLST, prog_name=prog_name.upper())
+    ret = response.RPC[0]
+    if ret.status == ErrorDictionary.MEMO_073:
+        raise ProgramDoesNotExistException(prog_name.upper())
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
     return ret

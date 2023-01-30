@@ -45,6 +45,7 @@ class RpcId(str, Enum):
     GET_RAW_FILE = "251"
     GTFILIST = "234"
     GTMCRLST = "244"
+    GTPIDLST = "228"
     IOCKSIM = "64"
     IODEFPN = "68"
     IOGETASG = "219"
@@ -271,6 +272,12 @@ class IoUnsimResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.IOUNSIM]
 
 
+class GetPIdListResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.GTPIDLST]
+    pos_cnt: int
+    posidlist: t.List[int]
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -280,6 +287,7 @@ AnnotatedResponseType = te.Annotated[
         ExecKclCommandResponse,
         GetFileListResponse,
         GetMacroListResponse,
+        GetPIdListResponse,
         GetRawFileResponse,
         IoCheckSimResponse,
         IoDefPnResponse,
