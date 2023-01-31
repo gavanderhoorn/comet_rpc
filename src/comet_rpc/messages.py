@@ -59,6 +59,7 @@ class RpcId(str, Enum):
     IOVALSET = "63"
     LOCAL_START = "245"
     MMCREMN = "22"
+    MMGETTYP = "246"
     MMMSOPEN = "9"
     PASTELIN = "225"
     PGABORT = "102"
@@ -301,6 +302,26 @@ class IoAsgLogResponse(BaseRpcResponse):
         return int(v, 16) if isinstance(v, str) else v
 
 
+class ProgramType(IntEnum):
+    UNKNOWN = 0
+    TP = 1  # PT_MNE_UNDEF
+    PC = 2  # PT_KRLPRG
+
+
+class ProgramSubType(IntEnum):
+    UNDEF = 0  # PT_MNE_UNDEF
+    JOB = 1  # PT_MNE_JOB
+    PROC = 2  # PT_MNE_PROC
+    MACRO = 3  # PT_MNE_MACRO
+    COND = 4  # PT_MNE_COND
+
+
+class MmGetTypResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.MMGETTYP]
+    prg_typ: ProgramType
+    sub_typ: ProgramSubType
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -324,6 +345,7 @@ AnnotatedResponseType = te.Annotated[
         IoValRdResponse,
         IoValSetResponse,
         LocalStartResponse,
+        MmGetTypResponse,
         PasteLinResponse,
         PgAbortResponse,
         PosRegValRdResponse,

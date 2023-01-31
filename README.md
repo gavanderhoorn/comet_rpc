@@ -176,7 +176,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | MMDELPOS          |     N      |                 |
 | MMDELPRG          |     N      |                 |
 | MMGETATR          |     N      |                 |
-| MMGETTYP          |     N      |                 |
+| MMGETTYP          |     Y      |                 |
 | MMRENPRG          |     N      |                 |
 | MMSETATR          |     N      |                 |
 | MNCHGREP          |     N      |                 |

@@ -69,6 +69,7 @@ from .messages import (
     IoValRdResponse,
     IoValSetResponse,
     LocalStartResponse,
+    MmGetTypResponse,
     PasteLinResponse,
     PgAbortResponse,
     PosRegValRdResponse,
@@ -735,6 +736,21 @@ def iovalset(server: str, typ: IoType, index: int, value: int) -> IoValSetRespon
 
 def local_start(server: str, value: int) -> LocalStartResponse:
     response = _call(server, function=RpcId.LOCAL_START, value=value)
+    ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+def mmgettyp(server: str, prog_name: str) -> MmGetTypResponse:
+    """Determine the type of program `prog_name`.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param prog_name: Name of the program to get the type for
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(server, function=RpcId.MMGETTYP, prog_name=prog_name)
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
