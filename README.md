@@ -225,6 +225,8 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 
 </details>
 
+Total supported RPCs: 31 of 85.
+
 ## Limitations / Known issues
 
 The following limitations and known issues exist:
