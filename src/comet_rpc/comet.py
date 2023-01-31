@@ -286,16 +286,13 @@ def dpread(server: str, dict_name: str, ele_no: int) -> DpReadResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.DPREAD, dict_name=dict_name, ele_no=ele_no)
-
     ret = response.RPC[0]
-
     if ret.status == ErrorDictionary.DICT_004:
         raise DictNotFoundException(f"No such dictionary: '{dict_name}'")
     if ret.status == ErrorDictionary.DICT_005:
         raise DictElementNotFoundException(f"No such element: {ele_no}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -310,14 +307,11 @@ def dpewrite_str(server: str, error_code: int) -> DpeWriteStrResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.DPEWRITE_STR, ercode=error_code)
-
     ret = response.RPC[0]
-
     if ret.status == ErrorDictionary.DICT_005:
         raise DictElementNotFoundException(f"No such element: 0x{error_code:06X}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -338,7 +332,6 @@ def exec_kcl(server: str, cmd: str) -> ExecKclCommandResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.CPKCL, kcl_cmd=cmd)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -357,7 +350,6 @@ def get_raw_file(server: str, file: str) -> GetRawFileResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.GET_RAW_FILE, file=file)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -379,7 +371,6 @@ def gtfilist(server: str, path_name: str) -> GetFileListResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.GTFILIST, path_name=path_name)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -437,8 +428,6 @@ def iocksim(server: str, typ: IoType, index: int) -> IoCheckSimResponse:
     """
     response = _call(server, function=RpcId.IOCKSIM, type=typ.value, index=index)
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
@@ -447,7 +436,6 @@ def iocksim(server: str, typ: IoType, index: int) -> IoCheckSimResponse:
         raise NoPortsOfThisTypeException(f"Port number: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -471,17 +459,13 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
         index=index,
         comment=comment,
     )
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -511,13 +495,9 @@ def iogethdb(server: str) -> IoGetHdbResponse:
         server,
         function=RpcId.IOGETHDB,
     )
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -535,10 +515,7 @@ def iogetpn(server: str, typ: IoType, index: int) -> IoGetPnResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.IOGETPN, type=typ.value, index=index)
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
@@ -547,7 +524,6 @@ def iogetpn(server: str, typ: IoType, index: int) -> IoGetPnResponse:
         raise NoCommentOnIoPortException(f"No comment available for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -575,16 +551,13 @@ def iogtall(server: str, typ: IoType, index: int, count: int) -> IoGetAllRespons
     response = _call(
         server, function=RpcId.IOGTALL, type=typ.value, index=index, cnt=count
     )
-
     ret = response.RPC[0]
-
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -602,17 +575,13 @@ def iosim(server: str, typ: IoType, index: int) -> IoSimResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.IOSIM, type=typ.value, index=index)
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -636,17 +605,13 @@ def iounsim(server: str, typ: IoType, index: int) -> IoUnsimResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.IOUNSIM, type=typ.value, index=index)
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -663,17 +628,13 @@ def iovalrd(server: str, typ: IoType, index: int) -> ReadIoResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.IOVALRD, type=typ.value, index=index)
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -707,23 +668,18 @@ def iovalset(server: str, typ: IoType, index: int, value: int) -> WriteIoRespons
     response = _call(
         server, function=RpcId.IOVALSET, type=typ.value, index=index, value=value
     )
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.PRIO_001:
         raise InvalidIoTypeException(f"Illegal port type: {typ.value}")
     if ret.status == ErrorDictionary.PRIO_002:
         raise InvalidIoIndexException(f"Illegal port number for port: {index}")
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
 def local_start(server: str, value: int) -> LocalStartResponse:
     response = _call(server, function=RpcId.LOCAL_START, value=value)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -790,7 +746,6 @@ def posregvalrd(server: str, index: int, grp_num: int = 1) -> PosRegValReadRespo
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.POSREGVALRD, grp_num=grp_num, index=index)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -808,7 +763,6 @@ def prog_abort(server: str, prog_name: str = "*ALL*") -> ProgAbortResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.PGABORT, task_name=prog_name)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -827,7 +781,6 @@ def regvalrd(server: str, index: int) -> RegisterReadResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.REGVALRD, index=index)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -898,15 +851,11 @@ def txchgprg(server: str, prog_name: str) -> TxChgPrgResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.TXCHGPRG, prog_name=prog_name.upper())
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status == ErrorDictionary.MEMO_073:
         raise ProgramDoesNotExistException(prog_name.upper())
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -919,7 +868,6 @@ def txml_curang(server: str, grp_num: int = 1) -> TxMlCurAngResponse:
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(server, function=RpcId.TXML_CURANG, grp_num=grp_num)
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -945,7 +893,6 @@ def txml_curpos(
         pos_type=pos_type,
         grp_num=grp_num,
     )
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -969,7 +916,6 @@ def txsetlin(server: str, prog_name: str, line_num: int = 1) -> TxSetLinResponse
         prog_name=prog_name.upper(),
         line_num=line_num,
     )
-
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -998,10 +944,7 @@ def vmip_readva(server: str, prog_name: str, var_name: str) -> VariableReadRespo
         prog_name=prog_name.upper(),
         var_name=var_name.upper(),
     )
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status != 0:
         if ret.status == ErrorDictionary.VARS_006:
             raise UnknownVariableException(f"'{var_name.upper()}'")
@@ -1010,7 +953,6 @@ def vmip_readva(server: str, prog_name: str, var_name: str) -> VariableReadRespo
         if ret.status == ErrorDictionary.VARS_024:
             raise BadVariableOrRegisterIndexException(f"'{var_name.upper()}'")
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
 
 
@@ -1053,10 +995,7 @@ def vmip_writeva(
         var_name=var_name.upper(),
         value=value,
     )
-
     ret = response.RPC[0]
-
-    # check call succeeded
     if ret.status != 0:
         if ret.status == ErrorDictionary.VARS_006:
             raise UnknownVariableException(f"'{var_name.upper()}'")
@@ -1067,5 +1006,4 @@ def vmip_writeva(
         if ret.status == ErrorDictionary.VARS_049:
             raise BadElementInStructureException(f"'{var_name.upper()}'")
         raise UnexpectedRpcStatusException(ret.status)
-
     return ret
