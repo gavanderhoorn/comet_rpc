@@ -453,11 +453,7 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(
-        server,
-        function=RpcId.IODEFPN,
-        type=typ.value,
-        index=index,
-        comment=comment,
+        server, function=RpcId.IODEFPN, type=typ.value, index=index, comment=comment
     )
     ret = response.RPC[0]
     if ret.status == ErrorDictionary.PRIO_001:
@@ -491,10 +487,7 @@ def iogethdb(server: str) -> IoGetHdbResponse:
     :returns: The parsed response document
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
-    response = _call(
-        server,
-        function=RpcId.IOGETHDB,
-    )
+    response = _call(server, function=RpcId.IOGETHDB)
     ret = response.RPC[0]
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
@@ -911,10 +904,7 @@ def txsetlin(server: str, prog_name: str, line_num: int = 1) -> TxSetLinResponse
     :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
     """
     response = _call(
-        server,
-        function=RpcId.TXSETLIN,
-        prog_name=prog_name.upper(),
-        line_num=line_num,
+        server, function=RpcId.TXSETLIN, prog_name=prog_name.upper(), line_num=line_num
     )
     ret = response.RPC[0]
     if ret.status != 0:
