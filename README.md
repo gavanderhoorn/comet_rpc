@@ -155,7 +155,7 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 | GTFILIST          |     Y      | 9.40+           |
 | GTMCRLST          |     Y      | 9.30+           |
 | GTPIDLST          |     Y      |                 |
-| IOASGLOG          |     N      | 9.40+           |
+| IOASGLOG          |     Y      | 9.40+           |
 | IOCKSIM           |     Y      | 8.30+           |
 | IODEFPN           |     Y      |                 |
 | IODRYRUN          |     N      | 9.40+           |

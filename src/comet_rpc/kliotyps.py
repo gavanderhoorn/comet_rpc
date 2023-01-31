@@ -20,6 +20,7 @@ from enum import IntEnum
 class IoType(IntEnum):
     """from kliotyps.kl, V9.40"""
 
+    None_ = 0
     DigitalIn = 1  # Digital input
     DigitalOut = 2  # Digital output
     AnalogIn = 3  # Analog input

@@ -118,3 +118,13 @@ class NoCommentOnIoPortException(CometRpcException):
 # HRTL-022: Invalid Argument
 class InvalidArgumentException(CometRpcException):
     pass
+
+
+# PRIO-011
+class AssignmentOverlapsExistingOneException(CometRpcException):
+    pass
+
+
+# PRIO-007: No match in SET_PORT_ASG de-assign
+class NoSuchAssignmentException(CometRpcException):
+    pass

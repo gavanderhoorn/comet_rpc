@@ -22,6 +22,7 @@ import typing as t
 from urllib import parse
 
 from .exceptions import (
+    AssignmentOverlapsExistingOneException,
     AuthenticationException,
     BadElementInStructureException,
     BadVariableOrRegisterIndexException,
@@ -35,6 +36,7 @@ from .exceptions import (
     NoCommentOnIoPortException,
     NoDataDefinedForProgramException,
     NoPortsOfThisTypeException,
+    NoSuchAssignmentException,
     NoSuchLineException,
     NoSuchMethodException,
     PositionDoesNotExistException,
@@ -55,6 +57,7 @@ from .messages import (
     GetMacroListResponse,
     GetPIdListResponse,
     GetRawFileResponse,
+    IoAsgLogResponse,
     IoCheckSimResponse,
     IoDefPnResponse,
     IoGetAllResponse,
@@ -407,6 +410,65 @@ def get_pos_id_list(server: str, prog_name: str) -> GetPIdListResponse:
     ret = response.RPC[0]
     if ret.status == ErrorDictionary.MEMO_073:
         raise ProgramDoesNotExistException(prog_name.upper())
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+
+def ioasglog(
+    server: str,
+    log_port_type: IoType,
+    first_log_port_idx: int,
+    number_of_log_ports: int,
+    rack_no: int,
+    slot_no: int,
+    phy_port_type: IoType,
+    first_phy_port_idx: int,
+) -> IoAsgLogResponse:
+    """Update IO range, rack, slot and start configuration.
+
+    To delete an existing range, provide `log_port_type` and `first_log_port_idx` while
+    setting all other arguments to `0` (use `IoType.None_` for `phy_port_type`).
+
+    Make sure to check the `asg_stat` field in the response document for values other
+    than zero. `COMET` uses that field to report the success of the operation (as
+    opposed to the main `status` field).
+
+    NOTE: new or updated assignments will require a controller restart to take effect
+    (otherwise they'll stay in `PEND` state). `IOGETASG` can be used to retrieve the
+    status of each assignment (the `valid` field of each element of the `data` field).
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param log_port_type: The type of IO range
+    :param first_log_port_idx: Start port number (logical) of the new range
+    :param number_of_log_ports: Number of (logical) ports in the new range
+    :param rack_no: The rack number
+    :param slot_no: The slot number
+    :param phy_port_type: Type of the physical IO ports this range is mapped to
+    :param first_phy_port_idx: Start port number (physical) of the new range
+    :returns: The parsed response document
+    :raises NoSuchAssignmentException: If there is no range configured of type
+      `log_port_type` starting at `first_log_port_idx` (in case of removing a range)
+    :raises AssignmentOverlapsExistingOneException: If the new range defined would
+      overlap with an existing range (in case of configuring a new range)
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(
+        server,
+        function=RpcId.IOASGLOG,
+        log_port_type=log_port_type.value,
+        fst_log_port=first_log_port_idx,
+        n_log_ports=number_of_log_ports,
+        rack_no=rack_no,
+        slot_no=slot_no,
+        phy_port_type=phy_port_type.value,
+        fst_phy_port=first_phy_port_idx,
+    )
+    ret = response.RPC[0]
+    if ret.asg_stat == ErrorDictionary.PRIO_007:
+        raise NoSuchAssignmentException()
+    if ret.asg_stat == ErrorDictionary.PRIO_011:
+        raise AssignmentOverlapsExistingOneException()
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
     return ret

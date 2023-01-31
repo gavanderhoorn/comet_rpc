@@ -46,6 +46,7 @@ class RpcId(str, Enum):
     GTFILIST = "234"
     GTMCRLST = "244"
     GTPIDLST = "228"
+    IOASGLOG = "61"
     IOCKSIM = "64"
     IODEFPN = "68"
     IOGETASG = "219"
@@ -291,6 +292,15 @@ class PasteLineResponse(BaseRpcResponse):
     lin_num: int
 
 
+class IoAsgLogResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOASGLOG]
+    asg_stat: int
+
+    @validator("asg_stat", pre=True)
+    def set_asg_stat(cls, v, values, **kwargs):
+        return int(v, 16) if isinstance(v, str) else v
+
+
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
@@ -302,6 +312,7 @@ AnnotatedResponseType = te.Annotated[
         GetMacroListResponse,
         GetPIdListResponse,
         GetRawFileResponse,
+        IoAsgLogResponse,
         IoCheckSimResponse,
         IoDefPnResponse,
         IoGetAllResponse,

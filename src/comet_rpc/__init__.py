@@ -23,6 +23,7 @@ from .comet import (
     get_pos_id_list,
     get_raw_file,
     gtfilist,
+    ioasglog,
     iocksim,
     iodefpn,
     iogetasg,
@@ -50,6 +51,7 @@ from .comet import (
 )
 
 from .exceptions import (
+    AssignmentOverlapsExistingOneException,
     AuthenticationException,
     BadElementInStructureException,
     BadVariableOrRegisterIndexException,
@@ -63,6 +65,7 @@ from .exceptions import (
     LockedResourceException,
     NoCommentOnIoPortException,
     NoDataDefinedForProgramException,
+    NoSuchAssignmentException,
     NoSuchLineException,
     NoSuchMethodException,
     PositionDoesNotExistException,
@@ -78,6 +81,7 @@ from .kliotyps import IoType
 __version__ = "0.2.2"
 
 __all__ = [
+    "AssignmentOverlapsExistingOneException",
     "AuthenticationException",
     "BadElementInStructureException",
     "BadVariableOrRegisterIndexException",
@@ -96,6 +100,7 @@ __all__ = [
     "InvalidArgumentException",
     "InvalidIoIndexException",
     "InvalidIoTypeException",
+    "ioasglog",
     "iocksim",
     "iodefpn",
     "iogetasg",
@@ -111,6 +116,7 @@ __all__ = [
     "LockedResourceException",
     "NoCommentOnIoPortException",
     "NoDataDefinedForProgramException",
+    "NoSuchAssignmentException",
     "NoSuchLineException",
     "NoSuchMethodException",
     "paste_line",
