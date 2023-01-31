@@ -49,16 +49,16 @@ from .exceptions import (
 from .fr_errors import ErrorDictionary
 from .kliotyps import IoType
 from .messages import (
-    ChangeOverrideResponse,
+    ChgOvrdResponse,
+    CpKclResponse,
     DpeWriteStrResponse,
     DpReadResponse,
-    ExecKclCommandResponse,
-    GetFileListResponse,
-    GetMacroListResponse,
     GetPIdListResponse,
     GetRawFileResponse,
+    GtFiListResponse,
+    GtMcrLstResponse,
     IoAsgLogResponse,
-    IoCheckSimResponse,
+    IoCkSimResponse,
     IoDefPnResponse,
     IoGetAllResponse,
     IoGetAsgResponse,
@@ -66,23 +66,23 @@ from .messages import (
     IoGetPnResponse,
     IoSimResponse,
     IoUnsimResponse,
+    IoValRdResponse,
+    IoValSetResponse,
     LocalStartResponse,
-    PasteLineResponse,
-    PosRegValReadResponse,
-    ProgAbortResponse,
-    ReadIoResponse,
-    RegisterReadResponse,
-    RemotePrintfResponse,
+    PasteLinResponse,
+    PgAbortResponse,
+    PosRegValRdResponse,
+    RegValRdResponse,
     RpcId,
     RpcResponse,
+    RPrintfResponse,
     ScGetPosResponse,
     TxChgPrgResponse,
     TxMlCurAngResponse,
     TxMlCurPosResponse,
     TxSetLinResponse,
-    VariableReadResponse,
-    VariableWriteResponse,
-    WriteIoResponse,
+    VmIpReadVaResponse,
+    VmIpWriteVaResponse,
 )
 
 
@@ -249,7 +249,7 @@ def _call(
     return response
 
 
-def change_override(server: str, value: int) -> ChangeOverrideResponse:
+def change_override(server: str, value: int) -> ChgOvrdResponse:
     """Set the general override to `value`.
 
     (Apparent) legal values and ranges:
@@ -318,7 +318,7 @@ def dpewrite_str(server: str, error_code: int) -> DpeWriteStrResponse:
     return ret
 
 
-def exec_kcl(server: str, cmd: str) -> ExecKclCommandResponse:
+def exec_kcl(server: str, cmd: str) -> CpKclResponse:
     """Execute the KCL command `cmd` on the controller.
 
     This is similar to the `KCL` and `KCLDO` 'CGI programs' supported by FANUC
@@ -359,7 +359,7 @@ def get_raw_file(server: str, file: str) -> GetRawFileResponse:
     return ret
 
 
-def gtfilist(server: str, path_name: str) -> GetFileListResponse:
+def gtfilist(server: str, path_name: str) -> GtFiListResponse:
     """Download a directory listing for the drive/device/directory `path_name`.
 
     Setting `path_name="*"` will return all files and directories in the
@@ -380,7 +380,7 @@ def gtfilist(server: str, path_name: str) -> GetFileListResponse:
     return ret
 
 
-def get_macro_list(server: str) -> GetMacroListResponse:
+def get_macro_list(server: str) -> GtMcrLstResponse:
     """Retrieve the names of all macros present on the controller.
 
     NOTE: COMET appears to return an empty string as the last element in the list.
@@ -474,7 +474,7 @@ def ioasglog(
     return ret
 
 
-def iocksim(server: str, typ: IoType, index: int) -> IoCheckSimResponse:
+def iocksim(server: str, typ: IoType, index: int) -> IoCkSimResponse:
     """Check whether the IO port at `index` of type `typ` is simulated or not.
 
     :param server: Hostname or IP address of COMET RPC server
@@ -670,7 +670,7 @@ def iounsim(server: str, typ: IoType, index: int) -> IoUnsimResponse:
     return ret
 
 
-def iovalrd(server: str, typ: IoType, index: int) -> ReadIoResponse:
+def iovalrd(server: str, typ: IoType, index: int) -> IoValRdResponse:
     """Retrieve the value of the IO port of type `typ` at `index`.
 
     :param server: Hostname or IP address of COMET RPC server
@@ -693,7 +693,7 @@ def iovalrd(server: str, typ: IoType, index: int) -> ReadIoResponse:
     return ret
 
 
-def iovalset(server: str, typ: IoType, index: int, value: int) -> WriteIoResponse:
+def iovalset(server: str, typ: IoType, index: int, value: int) -> IoValSetResponse:
     """Update the `value` of the IO port of type `typ` at `index`.
 
     `value` will be `int`, even for `BOOLEAN` ports on the controller. In those
@@ -753,7 +753,7 @@ def paste_line(
     select_end: int,
     insert_at: int,
     oper: PasteLineOper,
-) -> PasteLineResponse:
+) -> PasteLinResponse:
     """Copy or cut lines `[start, end]` in TP program `prog_name` to line `insert_at`.
 
     NOTE: COMET will insert the copied/cut line(s) *after* the line at `insert_at`. In
@@ -791,7 +791,7 @@ def paste_line(
     return ret
 
 
-def posregvalrd(server: str, index: int, grp_num: int = 1) -> PosRegValReadResponse:
+def posregvalrd(server: str, index: int, grp_num: int = 1) -> PosRegValRdResponse:
     """Retrieve the contents of the position register at `index` for group `grp_num`.
 
     :param server: Hostname or IP address of COMET RPC server
@@ -807,7 +807,7 @@ def posregvalrd(server: str, index: int, grp_num: int = 1) -> PosRegValReadRespo
     return ret
 
 
-def prog_abort(server: str, prog_name: str = "*ALL*") -> ProgAbortResponse:
+def prog_abort(server: str, prog_name: str = "*ALL*") -> PgAbortResponse:
     """Attempt to ABORT the program `prog_name`.
 
     Set `prog_name` to `"*ALL"` to attempt to abort all (user) tasks.
@@ -824,7 +824,7 @@ def prog_abort(server: str, prog_name: str = "*ALL*") -> ProgAbortResponse:
     return ret
 
 
-def regvalrd(server: str, index: int) -> RegisterReadResponse:
+def regvalrd(server: str, index: int) -> RegValRdResponse:
     """Retrieve the contents of the register at `index`.
 
     Depending on the value stored in the register, this will return an `int` or
@@ -842,7 +842,7 @@ def regvalrd(server: str, index: int) -> RegisterReadResponse:
     return ret
 
 
-def rprintf(server: str, line: str) -> RemotePrintfResponse:
+def rprintf(server: str, line: str) -> RPrintfResponse:
     """Append the string `line` to the console log on the controller.
 
     This will cause the string `line` to be appended to the console log on the
@@ -974,7 +974,7 @@ def txsetlin(server: str, prog_name: str, line_num: int = 1) -> TxSetLinResponse
     return ret
 
 
-def vmip_readva(server: str, prog_name: str, var_name: str) -> VariableReadResponse:
+def vmip_readva(server: str, prog_name: str, var_name: str) -> VmIpReadVaResponse:
     """Read the variable 'var_name' in program 'prog_name'.
 
     Set `prog_name` to `"*SYSTEM*"` to read system variables.
@@ -1010,7 +1010,7 @@ def vmip_readva(server: str, prog_name: str, var_name: str) -> VariableReadRespo
 
 def vmip_writeva(
     server: str, prog_name: str, var_name: str, value: t.Union[str, int, float]
-) -> VariableWriteResponse:
+) -> VmIpWriteVaResponse:
     """Write 'value' to the variable 'var_name' in program 'prog_name'.
 
     Set `prog_name` to `"*SYSTEM*"` to write to system variables.

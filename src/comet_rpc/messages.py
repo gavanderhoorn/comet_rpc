@@ -84,18 +84,18 @@ class BaseRpcResponse(BaseModel):
         return int(v, 16) if isinstance(v, str) else v
 
 
-class ReadIoResponse(BaseRpcResponse):
+class IoValRdResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.IOVALRD]
     type: IoType
     index: int
     value: int
 
 
-class WriteIoResponse(BaseRpcResponse):
+class IoValSetResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.IOVALSET]
 
 
-class VariableReadResponse(BaseRpcResponse):
+class VmIpReadVaResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.VMIP_READVA]
     prog_name: str
     var_name: str
@@ -103,18 +103,18 @@ class VariableReadResponse(BaseRpcResponse):
     value: str
 
 
-class VariableWriteResponse(BaseRpcResponse):
+class VmIpWriteVaResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.VMIP_WRITEVA]
 
 
-class RegisterReadResponse(BaseRpcResponse):
+class RegValRdResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.REGVALRD]
     type: int
     value: t.Union[int, float]
     comment: str
 
 
-class PosRegValReadResponse(BaseRpcResponse):
+class PosRegValRdResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.POSREGVALRD]
     type: PositionType
     comment: str
@@ -143,11 +143,11 @@ class LocalStartResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.LOCAL_START]
 
 
-class ExecKclCommandResponse(BaseRpcResponse):
+class CpKclResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.CPKCL]
 
 
-class RemotePrintfResponse(BaseRpcResponse):
+class RPrintfResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.RPRINTF]
 
 
@@ -185,7 +185,7 @@ class GetRawFileResponse(BaseRpcResponse):
     lines: t.List[GetRawFileLine]
 
 
-class GetFileListResponse(BaseRpcResponse):
+class GtFiListResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.GTFILIST]
     value: t.List[str]
 
@@ -204,7 +204,7 @@ class TxMlCurAngResponse(BaseRpcResponse):
     value: str
 
 
-class ProgAbortResponse(BaseRpcResponse):
+class PgAbortResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.PGABORT]
 
 
@@ -224,16 +224,16 @@ class IoGetHdbResponse(BaseRpcResponse):
     data: t.List[IoGetHdbResponseElement]
 
 
-class ChangeOverrideResponse(BaseRpcResponse):
+class ChgOvrdResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.CHGOVRD]
 
 
-class GetMacroListResponse(BaseRpcResponse):
+class GtMcrLstResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.GTMCRLST]
     macrolist: t.List[str]
 
 
-class IoCheckSimResponse(BaseRpcResponse):
+class IoCkSimResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.IOCKSIM]
     type: IoType
     index: int
@@ -287,7 +287,7 @@ class ScGetPosResponse(BaseRpcResponse):
     value: t.List[str]
 
 
-class PasteLineResponse(BaseRpcResponse):
+class PasteLinResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.PASTELIN]
     lin_num: int
 
@@ -304,16 +304,16 @@ class IoAsgLogResponse(BaseRpcResponse):
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
 AnnotatedResponseType = te.Annotated[
     t.Union[
-        ChangeOverrideResponse,
+        ChgOvrdResponse,
+        CpKclResponse,
         DpeWriteStrResponse,
         DpReadResponse,
-        ExecKclCommandResponse,
-        GetFileListResponse,
-        GetMacroListResponse,
         GetPIdListResponse,
         GetRawFileResponse,
+        GtFiListResponse,
+        GtMcrLstResponse,
         IoAsgLogResponse,
-        IoCheckSimResponse,
+        IoCkSimResponse,
         IoDefPnResponse,
         IoGetAllResponse,
         IoGetAsgResponse,
@@ -321,20 +321,21 @@ AnnotatedResponseType = te.Annotated[
         IoGetPnResponse,
         IoSimResponse,
         IoUnsimResponse,
+        IoValRdResponse,
+        IoValSetResponse,
         LocalStartResponse,
-        PasteLineResponse,
-        PosRegValReadResponse,
-        ProgAbortResponse,
-        ReadIoResponse,
-        RegisterReadResponse,
-        RemotePrintfResponse,
+        PasteLinResponse,
+        PgAbortResponse,
+        PosRegValRdResponse,
+        RegValRdResponse,
+        RPrintfResponse,
         ScGetPosResponse,
         TxChgPrgResponse,
         TxMlCurAngResponse,
         TxMlCurPosResponse,
         TxSetLinResponse,
-        VariableReadResponse,
-        WriteIoResponse,
+        VmIpReadVaResponse,
+        VmIpWriteVaResponse,
     ],
     # unfortunately, it looks like discriminator values are checked before type
     # coercion, so 'rpc' will still be a 'str' instead of an 'int'
