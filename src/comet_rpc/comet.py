@@ -242,8 +242,13 @@ def _call(
         raise DeserialisationException(
             f"Too many response elements: expected 1, got {num_rpc_eles}"
         )
-    if response.RPC[0].rpc == -1:
-        raise NoSuchMethodException(f"No such RPC: '{function.value}'")
+
+    # COMET returns -1 or 0 (V8.30) if we requested an unknown or
+    # unsupported RPC
+    if response.RPC[0].rpc == -1 or response.RPC[0].rpc == 0:
+        raise NoSuchMethodException(
+            f"Unsupported RPC: '{function.name}' ({function.value})"
+        )
 
     # leave checking RPC status codes to caller. They'll have more context.
 
