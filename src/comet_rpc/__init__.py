@@ -40,8 +40,6 @@ from .comet import (
     PasteLineOper,
     posregvalrd,
     prog_abort,
-    ProgramSubType,
-    ProgramType,
     regvalrd,
     rprintf,
     scgetpos,
@@ -80,6 +78,11 @@ from .exceptions import (
 )
 
 from .kliotyps import IoType
+
+from .messages import (
+    ProgramSubType,
+    ProgramType,
+)
 
 __version__ = "0.2.3"
 
