@@ -193,16 +193,21 @@ def _call(
     #
     #   {"FANUC":{"name":"<HOSTNAME>","fastclock":"<SOME_VALUE>","RPC":]}}
     #
-    # This has been reported on a real R-30iB+ running V9.3074 of the system
-    # software (for IOVALSET). iRProgrammer seems to ignore this, so we will as well.
+    # This has been reported for/on:
     #
-    # For now we add special handling for the IOVALSET and IOUNSIM cases here. Not
-    # sure I like this very much.
+    #  - R-30iB+, V9.3074: IOVALSET
+    #  - Roboguide V9.40: IOUNSIM
+    #  - Roboguide V8.30: VMIP_WRITEVA
+    #
+    # iRProgrammer seems to ignore this, so we will as well.
+    #
+    # For now we add special handling for these cases here. Not sure I like this
+    # very much.
     #
     # TODO: come up with a better way to deal with malformed responses
     response_text = r.text
     if '"RPC":]}}' in response_text:
-        if function in [RpcId.IOVALSET, RpcId.IOUNSIM]:
+        if function in [RpcId.IOVALSET, RpcId.IOUNSIM, RpcId.VMIP_WRITEVA]:
             # we can only assume the call succeeded, so fixup the response
             # TODO: it's likely IOUNSIM responses would be similar to IOSIM responses,
             # which would mean they'd be like IOVALRD. The patching we do here turns
