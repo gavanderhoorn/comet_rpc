@@ -134,98 +134,99 @@ Whenever a row has no value in the `Sys. SW version` column, that information ha
 
 <details>
 <summary>Click to expand</summary>
+<br/>
 
-| Name              | Supported? | Sys. SW version | Description                       |
-|:------------------|:----------:|----------------:|-----------------------------------|
-| CHGOVRD           |     Y      | 9.40+           | Change override                   |
-| CKTRKPRG          |     N      | 9.40+           | Check linetrack attributes        |
-| CLLB_CODE_REQ     |     N      | 9.40+           |                                   |
-| CLLB_PAYLOAD_CONF |     N      | 9.40+           |                                   |
-| CPKCL             |     Y      |                 | Execute KCL command               |
-| DCS_CHECK_APPLY   |     N      | 9.40+           |                                   |
-| DCS_CHECK_CODE    |     N      | 9.40+           |                                   |
-| DCS_VRFY_REQ      |     N      | 9.40+           |                                   |
-| DPEWRITE_STR      |     Y      |                 | Retrieve error code description   |
-| DPREAD            |     Y      | 8.30+           | Read element from dictionary      |
-| ERPOST            |     N      |                 | Post an error to the log          |
-| EXEC_TXCMND       |     N      | 8.10+           |                                   |
-| GET_FORM          |     N      | 8.10+           |                                   |
-| GET_RAW_FILE      |     Y      |                 | Get raw byte contents of file     |
-| GETFOCUS          |     N      |                 |                                   |
-| GTFILIST          |     Y      | 9.40+           | Get list of files in directory    |
-| GTMCRLST          |     Y      | 9.30+           | Get list of macros                |
-| GTPIDLST          |     Y      |                 | Get list of posregs in TP program |
-| IOASGLOG          |     Y      | 9.40+           | Update IO configuration           |
-| IOCKSIM           |     Y      | 8.30+           | Check simulated status of IO port |
-| IODEFPN           |     Y      |                 | Set/update comment on IO port     |
-| IODRYRUN          |     N      | 9.40+           | Treat all IO as-if simulated      |
-| IOGETASG          |     Y      | 9.40+           | Retrieve IO configuration         |
-| IOGETHDB          |     Y      | 9.40+           | Retrieve the "HW database"        |
-| IOGETPN           |     Y      |                 | Retrieve comment on IO port       |
-| IOGTALL           |     Y      |                 | Read IO ports, batch-wise         |
-| IOSIM             |     Y      | 8.30+           | Set IO port to simulated          |
-| IOUNSIM           |     Y      | 8.30+           | Clear simulated state of IO port  |
-| IOVALRD           |     Y      | 8.30+           | Read IO port                      |
-| IOVALSET          |     Y      | 8.30+           | Write to IO port                  |
-| IOWETRUN          |     N      | 9.40+           | Stop treating all IO as simulated |
-| LOCAL_PAUSE       |     N      |                 |                                   |
-| LOCAL_START       |     Y      |                 |                                   |
-| MG_RECPOS         |     N      | 9.40+           |                                   |
-| MMCHGTYP          |     N      |                 | Change the type of a program      |
-| MMCREMN           |     N      |                 | Create a TP program               |
-| MMDELPOS          |     N      |                 | Remove a position from a program  |
-| MMDELPRG          |     N      |                 | Delete a program                  |
-| MMGETATR          |     N      |                 | Read program attribute            |
-| MMGETTYP          |     Y      |                 | Read 'program type' (TP, PC, etc) |
-| MMRENPRG          |     N      |                 | Rename a program                  |
-| MMSETATR          |     N      |                 | Write program attribute           |
-| MNCHGREP          |     N      |                 | Convert position representation   |
-| MNCPYPRG          |     N      |                 | Copy a program                    |
-| OSSNDPKT_EXT      |     N      |                 |                                   |
-| PASTELIN          |     Y      | 9.40+           | Duplicate/move lines in a TP prog |
-| PGABORT           |     Y      |                 | Abort all/a specific program(s)   |
-| PMCUPFN           |     N      |                 |                                   |
-| PMCUPRQ           |     N      |                 |                                   |
-| PMCVALRD          |     N      |                 |                                   |
-| PMON_CAN_PKT      |     N      | 8.10+           |                                   |
-| PMON_DISCONNECT   |     N      | 8.10+           |                                   |
-| PMON_GET_PKT      |     N      | 8.10+           |                                   |
-| PMON_START_MON    |     N      | 8.10+           |                                   |
-| PMON_STOP_MON     |     N      | 8.10+           |                                   |
-| PMON_VERIFY_PKT   |     N      | 8.30+           |                                   |
-| POSREGVALRD       |     Y      |                 | Read a position register          |
-| RECPOS            |     N      |                 | Teach position (in program)       |
-| REGVALRD          |     Y      |                 | Read a register (int/real)        |
-| RPRINTF           |     Y      | 8.10+           | Print to the controllers conslog  |
-| RUN_TASK          |     N      |                 | Start a program on the controller |
-| SCDELETE          |     N      |                 | Delete line from program          |
-| SCEDIT            |     N      |                 | Add/replace line to/in program    |
-| SCGETPOS          |     N      | 9.40+           | Get position from program         |
-| SCSETPOS          |     N      |                 | Update position in program        |
-| SET_FORM          |     N      | 8.10+           |                                   |
-| SKIP_LINE         |     N      | 9.40+           | Change active line in paused prog |
-| TPEXTREQ          |     N      | 8.10+           |                                   |
-| TPLINK_DISCONNECT |     N      |                 |                                   |
-| TPLINK_NEW_URL    |     N      | 8.10+           |                                   |
-| TPMODE_CHG        |     N      | 9.40+           |                                   |
-| TPMULTI_TASKIDX   |     N      | 8.30+           |                                   |
-| TPXENSBV_KRL_EXT  |     N      |                 |                                   |
-| TPXENSBV_KRL_TEXT |     N      |                 |                                   |
-| TPXENSUB_EXT      |     N      |                 |                                   |
-| TPXFILSB_EXT      |     N      |                 |                                   |
-| TPXPRGSB_EXT      |     N      |                 |                                   |
-| TXCHGPRG          |     Y      |                 | Open (and make active) a TP prog  |
-| TXLSTPRG_FC       |     N      |                 | List programs (specific types)    |
-| TXML_CURANG       |     Y      |                 | Return current joint angles       |
-| TXML_CURPOS       |     Y      |                 | Return current TCP pose (XYZWPR)  |
-| TXSETLIN          |     Y      |                 | Open TP prog at specific line     |
-| VMIP_READVA       |     Y      |                 | Read a (system) variable          |
-| VMIP_WRITEVA      |     Y      | 8.30+           | Write to a (system) variable      |
-| XMLCOPY           |     N      |                 | Copy an XML file to another       |
+| Name              | Description                       | Supp.? | 8.x  | 9.x  |
+|:------------------|:----------------------------------|:------:|:-----|:-----|
+| CHGOVRD           | Change override                   |   Y    |      | .40+ |
+| CKTRKPRG          | Check linetrack attributes        |   N    |      | .40+ |
+| CLLB_CODE_REQ     |                                   |   N    |      | .40+ |
+| CLLB_PAYLOAD_CONF |                                   |   N    |      | .40+ |
+| CPKCL             | Execute KCL command               |   Y    |      |      |
+| DCS_CHECK_APPLY   |                                   |   N    |      | .40+ |
+| DCS_CHECK_CODE    |                                   |   N    |      | .40+ |
+| DCS_VRFY_REQ      |                                   |   N    |      | .40+ |
+| DPEWRITE_STR      | Retrieve error code description   |   Y    |      |      |
+| DPREAD            | Read element from dictionary      |   Y    | .30+ |      |
+| ERPOST            | Post an error to the log          |   N    |      |      |
+| EXEC_TXCMND       |                                   |   N    | .10+ |      |
+| GET_FORM          |                                   |   N    | .10+ |      |
+| GET_RAW_FILE      | Get raw byte contents of file     |   Y    |      |      |
+| GETFOCUS          |                                   |   N    |      |      |
+| GTFILIST          | Get list of files in directory    |   Y    |      | .40+ |
+| GTMCRLST          | Get list of macros                |   Y    |      | .30+ |
+| GTPIDLST          | Get list of posregs in TP program |   Y    |      |      |
+| IOASGLOG          | Update IO configuration           |   Y    |      | .40+ |
+| IOCKSIM           | Check simulated status of IO port |   Y    | .30+ |      |
+| IODEFPN           | Set/update comment on IO port     |   Y    |      |      |
+| IODRYRUN          | Treat all IO as-if simulated      |   N    |      | .40+ |
+| IOGETASG          | Retrieve IO configuration         |   Y    |      | .40+ |
+| IOGETHDB          | Retrieve the "HW database"        |   Y    |      | .40+ |
+| IOGETPN           | Retrieve comment on IO port       |   Y    |      |      |
+| IOGTALL           | Read IO ports, batch-wise         |   Y    |      |      |
+| IOSIM             | Set IO port to simulated          |   Y    | .30+ |      |
+| IOUNSIM           | Clear simulated state of IO port  |   Y    | .30+ |      |
+| IOVALRD           | Read IO port                      |   Y    | .30+ |      |
+| IOVALSET          | Write to IO port                  |   Y    | .30+ |      |
+| IOWETRUN          | Stop treating all IO as simulated |   N    |      | .40+ |
+| LOCAL_PAUSE       |                                   |   N    |      |      |
+| LOCAL_START       |                                   |   Y    |      |      |
+| MG_RECPOS         |                                   |   N    |      | .40+ |
+| MMCHGTYP          | Change the type of a program      |   N    |      |      |
+| MMCREMN           | Create a TP program               |   N    |      |      |
+| MMDELPOS          | Remove a position from a program  |   N    |      |      |
+| MMDELPRG          | Delete a program                  |   N    |      |      |
+| MMGETATR          | Read program attribute            |   N    |      |      |
+| MMGETTYP          | Read 'program type' (TP, PC, etc) |   Y    |      |      |
+| MMRENPRG          | Rename a program                  |   N    |      |      |
+| MMSETATR          | Write program attribute           |   N    |      |      |
+| MNCHGREP          | Convert position representation   |   N    |      |      |
+| MNCPYPRG          | Copy a program                    |   N    |      |      |
+| OSSNDPKT_EXT      |                                   |   N    |      |      |
+| PASTELIN          | Duplicate/move lines in a TP prog |   Y    |      | .40+ |
+| PGABORT           | Abort all/a specific program(s)   |   Y    |      |      |
+| PMCUPFN           |                                   |   N    |      |      |
+| PMCUPRQ           |                                   |   N    |      |      |
+| PMCVALRD          |                                   |   N    |      |      |
+| PMON_CAN_PKT      |                                   |   N    | .10+ |      |
+| PMON_DISCONNECT   |                                   |   N    | .10+ |      |
+| PMON_GET_PKT      |                                   |   N    | .10+ |      |
+| PMON_START_MON    |                                   |   N    | .10+ |      |
+| PMON_STOP_MON     |                                   |   N    | .10+ |      |
+| PMON_VERIFY_PKT   |                                   |   N    | .30+ |      |
+| POSREGVALRD       | Read a position register          |   Y    |      |      |
+| RECPOS            | Teach position (in program)       |   N    |      |      |
+| REGVALRD          | Read a register (int/real)        |   Y    |      |      |
+| RPRINTF           | Print to the controllers conslog  |   Y    | .10+ |      |
+| RUN_TASK          | Start a program on the controller |   N    |      |      |
+| SCDELETE          | Delete line from program          |   N    |      |      |
+| SCEDIT            | Add/replace line to/in program    |   N    |      |      |
+| SCGETPOS          | Get position from program         |   N    |      | .40+ |
+| SCSETPOS          | Update position in program        |   N    |      |      |
+| SET_FORM          |                                   |   N    | .10+ |      |
+| SKIP_LINE         | Change active line in paused prog |   N    |      | .40+ |
+| TPEXTREQ          |                                   |   N    | .10+ |      |
+| TPLINK_DISCONNECT |                                   |   N    |      |      |
+| TPLINK_NEW_URL    |                                   |   N    | .10+ |      |
+| TPMODE_CHG        |                                   |   N    |      | .40+ |
+| TPMULTI_TASKIDX   |                                   |   N    | .30+ |      |
+| TPXENSBV_KRL_EXT  |                                   |   N    |      |      |
+| TPXENSBV_KRL_TEXT |                                   |   N    |      |      |
+| TPXENSUB_EXT      |                                   |   N    |      |      |
+| TPXFILSB_EXT      |                                   |   N    |      |      |
+| TPXPRGSB_EXT      |                                   |   N    |      |      |
+| TXCHGPRG          | Open (and make active) a TP prog  |   Y    |      |      |
+| TXLSTPRG_FC       | List programs (specific types)    |   N    |      |      |
+| TXML_CURANG       | Return current joint angles       |   Y    |      |      |
+| TXML_CURPOS       | Return current TCP pose (XYZWPR)  |   Y    |      |      |
+| TXSETLIN          | Open TP prog at specific line     |   Y    |      |      |
+| VMIP_READVA       | Read a (system) variable          |   Y    |      |      |
+| VMIP_WRITEVA      | Write to a (system) variable      |   Y    | .30+ |      |
+| XMLCOPY           | Copy an XML file to another       |   N    |      |      |
 
 </details>
 
-Total supported RPCs: 31 of 85.
+Total supported RPCs: 32 of 85.
 
 ## Limitations / Known issues
 
