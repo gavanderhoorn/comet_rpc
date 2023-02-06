@@ -128,9 +128,13 @@ Note the lack of error detection and handling to keep the example brief.
 
 ## Supported RPCs
 
-The following table shows an overview of known RPCs, whether they are currently supported by `comet_rpc` and which version of `COMET` appears to support them ("appears", as this information is based on experiments, there is no public, authoritative source of truth available).
+The following table shows an overview of known RPCs, whether they are currently supported by `comet_rpc` (column `Supp.?`) and which version of `COMET` appears to support them ("appears", as this information is based on experiments, there is no public, authoritative source of truth available).
 
-Whenever a row has no value in the `Sys. SW version` column, that information hasn't been determined yet.
+The last two columns of the table clarify the minimum version of system software that supports a particular RPC.
+An entry in the `8.x` column implies an RPC is supported starting with version `8.x`.
+Use the value in the cell to determine the minor version number.
+
+For RPCs with no information in those columns this information hasn't been determined yet.
 
 <details>
 <summary>Click to expand</summary>
