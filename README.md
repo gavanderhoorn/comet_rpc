@@ -232,6 +232,20 @@ For RPCs with no information in those columns this information hasn't been deter
 
 Total supported RPCs: 32 of 85.
 
+### Observations
+
+Some observations based on the above table:
+
+1. IO R/W seems to be officialy supported from `V8.30`
+1. R/W of IO configuration requires at least `V9.40`
+1. writing to (system) variables requires at least `V8.30`, *but*
+1. reading (system) variables requires at least `V9.10`
+1. monitoring of (system) variables requires at least `V8.10`
+1. position and int/real register R/W requires at least `V9.10`
+1. CRUD of TP programs requires at least `V9.10`
+1. interaction with DCS requires at least `V9.40`
+1. starting a program (not via IO) requires at least `V9.30`
+
 ## Limitations / Known issues
 
 The following limitations and known issues exist:
