@@ -201,6 +201,7 @@ For RPCs with no information in those columns this information hasn't been deter
 | POSREGVALRD       | Read a position register          |   Y    |      | .10+ |
 | RECPOS            | Teach position (in program)       |   N    |      | .10+ |
 | REGVALRD          | Read a register (int/real)        |   Y    |      | .10+ |
+| REMARKLIN         | (Un)remark lines in a TP prog     |   N    |      | .30+ |
 | RPRINTF           | Print to the controllers conslog  |   Y    | .10+ |      |
 | RUN_TASK          | Start a program on the controller |   N    |      | .30+ |
 | SCDELETE          | Delete line from program          |   N    |      | .10+ |
