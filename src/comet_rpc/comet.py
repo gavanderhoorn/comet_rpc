@@ -74,6 +74,7 @@ from .messages import (
     PgAbortResponse,
     PosRegValRdResponse,
     RegValRdResponse,
+    RemarkLinResponse,
     RpcId,
     RpcResponse,
     RPrintfResponse,
@@ -810,6 +811,44 @@ def paste_line(
     ret = response.RPC[0]
     if ret.status == ErrorDictionary.MEMO_027:
         raise NoSuchLineException(f"insert_at: {insert_at}")
+    if ret.status == ErrorDictionary.HRTL_022:
+        raise InvalidArgumentException()
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
+
+class RemarkLineOper(IntEnum):
+    UNREMARK = 0
+    REMARK = 1
+
+def remark_line(
+    server: str,
+    prog_name: str,
+    select_start: int,
+    select_end: int,
+    oper: RemarkLineOper,
+) -> RemarkLinResponse:
+    """(Un)Remark lines`[start, end]` in TP program `prog_name`.
+
+    :param server: Hostname or IP address of COMET RPC server
+    :param prog_name: Name of the TP program to alter
+    :param select_start: Start of region for un/remark operation (1-based)
+    :param select_end: End of region for un/remark operation (1-based)
+    :param oper: The operation to perform: UNREMARK or REMARK 
+    :returns: The parsed response document
+    :raise InvalidArgumentException: If `select_end < select_start` or if `oper` is
+      an invalid value
+    :raises UnexpectedRpcStatusException: on any other non-zero RPC status code
+    """
+    response = _call(
+        server,
+        function=RpcId.REMARKLIN,
+        prog_name=prog_name.upper(),
+        start=select_start,
+        end=select_end,
+        remark=oper.value,
+    )
+    ret = response.RPC[0]
     if ret.status == ErrorDictionary.HRTL_022:
         raise InvalidArgumentException()
     if ret.status != 0:

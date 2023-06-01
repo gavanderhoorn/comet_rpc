@@ -66,6 +66,7 @@ class RpcId(str, Enum):
     POSREGVALRD = "248"
     RECPOS = "236"
     REGVALRD = "247"
+    REMARKLIN = "215"
     RPRINTF = "89"
     SCGETPOS = "14"
     TXCHGPRG = "43"
@@ -301,6 +302,10 @@ class IoAsgLogResponse(BaseRpcResponse):
     def set_asg_stat(cls, v, values, **kwargs):
         return int(v, 16) if isinstance(v, str) else v
 
+class RemarkLinResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.REMARKLIN]
+
+
 
 class ProgramType(IntEnum):
     UNKNOWN = 0
@@ -350,6 +355,7 @@ AnnotatedResponseType = te.Annotated[
         PgAbortResponse,
         PosRegValRdResponse,
         RegValRdResponse,
+        RemarkLinResponse,
         RPrintfResponse,
         ScGetPosResponse,
         TxChgPrgResponse,
