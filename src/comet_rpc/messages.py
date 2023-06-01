@@ -49,6 +49,7 @@ class RpcId(str, Enum):
     IOASGLOG = "61"
     IOCKSIM = "64"
     IODEFPN = "68"
+    IODRYRUN = "71"
     IOGETASG = "219"
     IOGETHDB = "218"
     IOGETPN = "67"
@@ -57,6 +58,7 @@ class RpcId(str, Enum):
     IOUNSIM = "66"
     IOVALRD = "62"
     IOVALSET = "63"
+    IOWETRUN = "72"
     LOCAL_START = "245"
     MMCREMN = "22"
     MMGETTYP = "246"
@@ -132,6 +134,11 @@ class DpeWriteStrResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.DPEWRITE_STR]
     value: str
 
+class IoDryRunResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IODRYRUN]
+
+class IoWetRunResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.IOWETRUN]
 
 class TxSetLinResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.TXSETLIN]
@@ -341,6 +348,7 @@ AnnotatedResponseType = te.Annotated[
         IoAsgLogResponse,
         IoCkSimResponse,
         IoDefPnResponse,
+        IoDryRunResponse,
         IoGetAllResponse,
         IoGetAsgResponse,
         IoGetHdbResponse,
@@ -349,6 +357,7 @@ AnnotatedResponseType = te.Annotated[
         IoUnsimResponse,
         IoValRdResponse,
         IoValSetResponse,
+        IoWetRunResponse,
         LocalStartResponse,
         MmGetTypResponse,
         PasteLinResponse,
