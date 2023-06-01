@@ -60,6 +60,7 @@ from .messages import (
     IoAsgLogResponse,
     IoCkSimResponse,
     IoDefPnResponse,
+    IoDryRunResponse,
     IoGetAllResponse,
     IoGetAsgResponse,
     IoGetHdbResponse,
@@ -68,6 +69,7 @@ from .messages import (
     IoUnsimResponse,
     IoValRdResponse,
     IoValSetResponse,
+    IoWetRunResponse,
     LocalStartResponse,
     MmGetTypResponse,
     PasteLinResponse,
@@ -538,6 +540,15 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
         raise UnexpectedRpcStatusException(ret.status)
     return ret
 
+def iodryrun(server: str) -> IoDryRunResponse:
+    """Simulates all the I/Os
+    :param server: Hostname or IP address of COMET RPC server
+    """
+    response = _call(server, function=RpcId.IODRYRUN)
+    ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
 
 def iogetasg(server: str, typ: IoType) -> IoGetAsgResponse:
     """Retrieve the IO configuratio for ports of type `typ`.
@@ -744,6 +755,15 @@ def iovalset(server: str, typ: IoType, index: int, value: int) -> IoValSetRespon
         raise UnexpectedRpcStatusException(ret.status)
     return ret
 
+def iowetrun(server: str) -> IoWetRunResponse:
+    """Unsimulates all the I/Os
+    :param server: Hostname or IP address of COMET RPC server
+    """
+    response = _call(server, function=RpcId.IOWETRUN)
+    ret = response.RPC[0]
+    if ret.status != 0:
+        raise UnexpectedRpcStatusException(ret.status)
+    return ret
 
 def local_start(server: str, value: int) -> LocalStartResponse:
     response = _call(server, function=RpcId.LOCAL_START, value=value)
@@ -846,7 +866,7 @@ def remark_line(
         prog_name=prog_name.upper(),
         start=select_start,
         end=select_end,
-        remark=oper.value,
+        remark=oper,
     )
     ret = response.RPC[0]
     if ret.status == ErrorDictionary.HRTL_022:
