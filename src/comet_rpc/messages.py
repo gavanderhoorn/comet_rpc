@@ -309,10 +309,6 @@ class IoAsgLogResponse(BaseRpcResponse):
     def set_asg_stat(cls, v, values, **kwargs):
         return int(v, 16) if isinstance(v, str) else v
 
-class RemarkLinResponse(BaseRpcResponse):
-    rpc: t.Literal[RpcId.REMARKLIN]
-
-
 
 class ProgramType(IntEnum):
     UNKNOWN = 0
@@ -332,6 +328,10 @@ class MmGetTypResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.MMGETTYP]
     prg_typ: ProgramType
     sub_typ: ProgramSubType
+
+
+class RemarkLinResponse(BaseRpcResponse):
+    rpc: t.Literal[RpcId.REMARKLIN]
 
 
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473

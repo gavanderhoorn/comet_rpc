@@ -540,6 +540,7 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
         raise UnexpectedRpcStatusException(ret.status)
     return ret
 
+
 def iodryrun(server: str) -> IoDryRunResponse:
     """Simulates all the I/Os
     :param server: Hostname or IP address of COMET RPC server
@@ -549,6 +550,7 @@ def iodryrun(server: str) -> IoDryRunResponse:
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
     return ret
+
 
 def iogetasg(server: str, typ: IoType) -> IoGetAsgResponse:
     """Retrieve the IO configuratio for ports of type `typ`.
@@ -755,6 +757,7 @@ def iovalset(server: str, typ: IoType, index: int, value: int) -> IoValSetRespon
         raise UnexpectedRpcStatusException(ret.status)
     return ret
 
+
 def iowetrun(server: str) -> IoWetRunResponse:
     """Unsimulates all the I/Os
     :param server: Hostname or IP address of COMET RPC server
@@ -764,6 +767,7 @@ def iowetrun(server: str) -> IoWetRunResponse:
     if ret.status != 0:
         raise UnexpectedRpcStatusException(ret.status)
     return ret
+
 
 def local_start(server: str, value: int) -> LocalStartResponse:
     response = _call(server, function=RpcId.LOCAL_START, value=value)
@@ -837,9 +841,11 @@ def paste_line(
         raise UnexpectedRpcStatusException(ret.status)
     return ret
 
+
 class RemarkLineOper(IntEnum):
     UNREMARK = 0
     REMARK = 1
+
 
 def remark_line(
     server: str,
