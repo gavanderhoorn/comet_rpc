@@ -542,8 +542,11 @@ def iodefpn(server: str, typ: IoType, index: int, comment: str) -> IoDefPnRespon
 
 
 def iodryrun(server: str) -> IoDryRunResponse:
-    """Simulates all the I/Os
+    """Changes all IO to 'simulated' ('S') status
+
     :param server: Hostname or IP address of COMET RPC server
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any non-zero RPC status code
     """
     response = _call(server, function=RpcId.IODRYRUN)
     ret = response.RPC[0]
@@ -759,8 +762,11 @@ def iovalset(server: str, typ: IoType, index: int, value: int) -> IoValSetRespon
 
 
 def iowetrun(server: str) -> IoWetRunResponse:
-    """Unsimulates all the I/Os
+    """Changes all IO to 'unsimulated' ('U') status
+
     :param server: Hostname or IP address of COMET RPC server
+    :returns: The parsed response document
+    :raises UnexpectedRpcStatusException: on any non-zero RPC status code
     """
     response = _call(server, function=RpcId.IOWETRUN)
     ret = response.RPC[0]
@@ -854,10 +860,12 @@ def remark_line(
     select_end: int,
     oper: RemarkLineOper,
 ) -> RemarkLinResponse:
-    """(Un)Remark lines`[start, end]` in TP program `prog_name`.
+    """(Un)remark lines `[start, end]` in TP program `prog_name`.
+
+    Note: 'to remark' is Fanuc terminology for 'to comment'.
 
     :param server: Hostname or IP address of COMET RPC server
-    :param prog_name: Name of the TP program to alter
+    :param prog_name: Name of the TP program to (un)remark lines in
     :param select_start: Start of region for un/remark operation (1-based)
     :param select_end: End of region for un/remark operation (1-based)
     :param oper: The operation to perform: UNREMARK or REMARK 
