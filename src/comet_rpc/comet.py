@@ -880,7 +880,7 @@ def remark_line(
         prog_name=prog_name.upper(),
         start=select_start,
         end=select_end,
-        remark=oper,
+        remark=oper.value,
     )
     ret = response.RPC[0]
     if ret.status == ErrorDictionary.HRTL_022:
