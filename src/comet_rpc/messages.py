@@ -332,6 +332,7 @@ class MmGetTypResponse(BaseRpcResponse):
 
 class RemarkLinResponse(BaseRpcResponse):
     rpc: t.Literal[RpcId.REMARKLIN]
+    lin_num : int
 
 
 # from https://github.com/pydantic/pydantic/discussions/3754#discussioncomment-2076473
